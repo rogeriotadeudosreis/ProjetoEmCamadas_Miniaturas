@@ -22,10 +22,19 @@ import util_utilidades.Conexao;
  */
 public class FabricanteDal {
 
+    private static FabricanteDal instance = null;
     private Connection conexao;
 
-    public FabricanteDal() {
+    private FabricanteDal() {
         conexao = Conexao.getConexao();
+    }
+
+    public static FabricanteDal getInstance() {
+        if (instance == null) {
+            instance = new FabricanteDal();
+        }
+        return instance;
+
     }
 
     public void addFabricante(Fabricantes fabricante) throws Exception {
@@ -95,22 +104,22 @@ public class FabricanteDal {
         return listFabricantes;
     }
 
-    public Fabricantes getFabricanteById(int id) throws Exception{
+    public Fabricantes getFabricanteById(int id) throws Exception {
         Fabricantes fabricante = new Fabricantes();
         String sql = "SELECT * FROM fabricantes WHERE id=?";
         try {
-            PreparedStatement preparedst = conexao.prepareStatement(sql);
-            
-                    
-            
-            
-            
-            
-            
+            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                fabricante.setId(rs.getInt("id"));
+                fabricante.setNome(rs.getString("nome"));
+            }
         } catch (Exception erro) {
             erro.printStackTrace();
             throw new Exception("Ocorreu um erro ao buscar este registro de fabricante\n");
         }
-       return null; 
+        return null;
     }
 }
