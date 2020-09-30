@@ -1,9 +1,3 @@
-/*
-CREATE TABLE fabricantes (
-   id_fab SERIAL PRIMARY KEY,
-   nome_fab VARCHAR (80) NOT NULL
-);
- */
 package dal_acessosaosdados;
 
 import java.sql.Connection;
@@ -14,46 +8,46 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model_classededados.Fabricantes;
+import model_classededados.Temas;
 import util_utilidades.Conexao;
 
 /**
  *
  * @author roger
  */
-public class FabricanteDal {
+public class TemaDal {
 
-    private static FabricanteDal instance = null;
+    private static TemaDal instance = null;
     private Connection conexao;
 
-    private FabricanteDal() {
+    private TemaDal() {
         conexao = Conexao.getConexao();
     }
 
-    public static FabricanteDal getInstance() {
+    public static TemaDal getInstance() {
         if (instance == null) {
-            instance = new FabricanteDal();
+            instance = new TemaDal();
         }
         return instance;
-
     }
 
-    public void addFabricante(Fabricantes fabricante) throws Exception {
-        String sql = "INSERT INTO fabricantes(nome_fab) VALUES (?)";
+    public void addTemasDal(Temas tema) throws Exception {
+        String sql = "INSERT INTO temas(nome_tem) VALUES (?)";
         try {
 
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
 
-            preparedStatement.setString(1, fabricante.getNome());
+            preparedStatement.setString(1, tema.getNome());
             preparedStatement.executeUpdate();
 
         } catch (SQLException erro) {
             throw new Exception("Ocorreu um erro ao adicionar este registro\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
     }
 
-    public void deleteFabricante(int id) throws Exception {
-        String sql = "DELETE FROM fabricantes WHERE id_fab=?";
+    public void deleteTemas(int id) throws Exception {
+        String sql = "DELETE FROM temas WHERE id_tem=?";
         try {
 
             PreparedStatement preparedStatement
@@ -64,62 +58,63 @@ public class FabricanteDal {
 
         } catch (SQLException erro) {
             throw new Exception("Ocorreu um erro ao deletar este registro!\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
     }
 
-    public void updateFabricante(Fabricantes fabricante) throws Exception {
-        String sql = "UPDATE fabricantes SET nome_fab=? WHERE id_fab=?";
+    public void updateTemas(Temas tema) throws Exception {
+        String sql = "UPDATE temas SET nome_tem=? WHERE id_tem=?";
         try {
             PreparedStatement preparedStatement
                     = conexao.prepareStatement(sql);
 
-            preparedStatement.setString(1, fabricante.getNome());
-            preparedStatement.setInt(2, fabricante.getId());
+            preparedStatement.setString(1, tema.getNome());
+            preparedStatement.setInt(2, tema.getId());
             preparedStatement.executeUpdate();
 
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao alterar este registro\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
 
     }
 
-    public List<Fabricantes> getAllFabricantes() throws Exception {
-        List<Fabricantes> listFabricantes = new ArrayList<Fabricantes>();
-        String sql = "SELECT * FROM fabricantes";
+    public List<Temas> getAllTemas() throws Exception {
+        List<Temas> listTemas = new ArrayList<Temas>();
+        String sql = "SELECT * FROM temas";
         try {
             Statement statement = conexao.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                Fabricantes fabricante = new Fabricantes();
-                fabricante.setId(rs.getInt("id_fab"));
-                fabricante.setNome(rs.getString("nome_fab"));
-                listFabricantes.add(fabricante);
+                Temas tema = new Temas();
+                tema.setId(rs.getInt("id_tem"));
+                tema.setNome(rs.getString("nome_tem"));
+                listTemas.add(tema);
             }
         } catch (Exception erro) {
-            throw new Exception("Ocorreu um erro ao consultar os registros de fabricantes\n"
-            + erro.getMessage());
+            throw new Exception("Ocorreu um erro ao consultar os registros de temas\n"
+                    + erro.getMessage());
         }
-        return listFabricantes;
+        return listTemas;
     }
 
-    public Fabricantes getFabricanteById(int id) throws Exception {
-        Fabricantes fabricante = new Fabricantes();
-        String sql = "SELECT * FROM fabricantes WHERE id_fab=?";
+    public Temas getTemasById(int id) throws Exception {
+        Temas tema = new Temas();
+        String sql = "SELECT * FROM temas WHERE id_tem=?";
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                fabricante.setId(rs.getInt("id_fab"));
-                fabricante.setNome(rs.getString("nome_fab"));
+                tema.setId(rs.getInt("id_tem"));
+                tema.setNome(rs.getString("nome_tem"));
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao buscar este registro de fabricantes\n"
-             + erro.getMessage());
+                    + erro.getMessage());
         }
-        return fabricante;
+        return tema;
     }
+
 }

@@ -55,10 +55,10 @@ public class CadFabricantes extends javax.swing.JDialog {
      */
     public CadFabricantes(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
-        criarTblFabricantes();
-        //consultaFabricantes();
-
         initComponents();
+        criarTblFabricantes();
+        consultaFabricantes();
+
     }
 
     private void criarTblFabricantes() {
@@ -66,21 +66,21 @@ public class CadFabricantes extends javax.swing.JDialog {
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
 
-        jTableFabricantes.getColumnModel().getColumn(0).setPreferredWidth(10);
+        jTableFabricantes.getColumnModel().getColumn(0).setMinWidth(10);
+        jTableFabricantes.getColumnModel().getColumn(0).setMaxWidth(10);
         jTableFabricantes.getColumnModel().getColumn(1).setPreferredWidth(100);
     }
 
     private void consultaFabricantes() throws Exception {
+        modelo.setRowCount(0);
+
         List<Fabricantes> listaFabricantes = new ArrayList<Fabricantes>();
         listaFabricantes = fabricanteBll.getConsulta();
-        if (listaFabricantes.size() > 0) {
-            for (int i = 0; i < listaFabricantes.size(); i++) {
-                modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
-                    listaFabricantes.get(i).getNome()});
-            }
-        } else {
-            modelo.setNumRows(0);
+        for (int i = 0; i < listaFabricantes.size(); i++) {
+            modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
+                listaFabricantes.get(i).getNome()});
         }
+        
     }
 
     private void limpaCampos() {
@@ -106,7 +106,7 @@ public class CadFabricantes extends javax.swing.JDialog {
         jButtonExcluir = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFabricantes = new javax.swing.JTable();
+        jTableFabricantes = new javax.swing.JTable(modelo);
         jButtonConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -139,14 +139,7 @@ public class CadFabricantes extends javax.swing.JDialog {
             }
         });
 
-        jTableFabricantes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        jTableFabricantes.setModel(modelo);
         jTableFabricantes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableFabricantesMouseClicked(evt);
@@ -203,8 +196,8 @@ public class CadFabricantes extends javax.swing.JDialog {
                     .addComponent(jButtonNovo)
                     .addComponent(jButtonConsultar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -239,7 +232,8 @@ public class CadFabricantes extends javax.swing.JDialog {
             } else {
                 fabricanteBll.alterar(fabricante);
             }
-            consultaFabricantes();
+                consultaFabricantes();
+
             limpaCampos();
 
         } catch (Exception erro) {
@@ -281,12 +275,13 @@ public class CadFabricantes extends javax.swing.JDialog {
             if (id > 0) {
                 fabricante = fabricanteBll.getConsultaPorId(id);
                 jTextFieldNomeFabricante.setText(fabricante.getNome());
+                jTextFieldCodFabricante.setText(id + "");
                 jButtonSalvar.setLabel("EDITAR");
             } else {
                 jButtonSalvar.setLabel("SALVAR");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção mouse click!!!", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
