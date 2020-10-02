@@ -15,9 +15,8 @@ CREATE TABLE miniaturas (
    FOREIGN KEY (id_tem_min) REFERENCES temas (id_tem)   
 );
 
-*/
-
-package model_classededados;
+ */
+package model;
 
 import java.util.Date;
 
@@ -29,29 +28,31 @@ public class Miniaturas {
 
     private int id;
     private String modelo_min;
-    private Date ano_min;
+    private int ano_min;
     private String observacoes_min;
     private String edicao_min;
     private String escala_min;
     private double valor_min;
-    private int id_fab_min;
-    private int id_tipMin_min;
-    private int id_tem_min;
+    private Fabricantes fabricante;
+    private TipoMiniaturas tipoMin;
+    private Temas tema;
 
     public Miniaturas() {
     }
 
-    public Miniaturas(int id, String modelo_min, Date ano_min, String observacoes_min, String edicao_min, String escala_min, double valor_min, int id_fab_min, int id_tipMin_min, int id_tem_min) {
-        this.id = id;
+    public Miniaturas(String modelo_min, int ano_min, String observacoes_min,
+            String edicao_min, String escala_min, double valor_min,
+            Fabricantes fabricante, TipoMiniaturas tipoMin, Temas tema) {
+
         this.modelo_min = modelo_min;
         this.ano_min = ano_min;
         this.observacoes_min = observacoes_min;
         this.edicao_min = edicao_min;
         this.escala_min = escala_min;
         this.valor_min = valor_min;
-        this.id_fab_min = id_fab_min;
-        this.id_tipMin_min = id_tipMin_min;
-        this.id_tem_min = id_tem_min;
+        this.fabricante = fabricante;
+        this.tipoMin = tipoMin;
+        this.tema = tema;
     }
 
     public int getId() {
@@ -70,11 +71,11 @@ public class Miniaturas {
         this.modelo_min = modelo_min;
     }
 
-    public Date getAno_min() {
+    public int getAno_min() {
         return ano_min;
     }
 
-    public void setAno_min(Date ano_min) {
+    public void setAno_min(int ano_min) {
         this.ano_min = ano_min;
     }
 
@@ -110,30 +111,28 @@ public class Miniaturas {
         this.valor_min = valor_min;
     }
 
-    public int getId_fab_min() {
-        return id_fab_min;
+    public Fabricantes getFabricante() {
+        return fabricante;
     }
 
-    public void setId_fab_min(int id_fab_min) {
-        this.id_fab_min = id_fab_min;
+    public void setFabricante(Fabricantes fabricante) {
+        this.fabricante = fabricante;
     }
 
-    public int getId_tipMin_min() {
-        return id_tipMin_min;
+    public TipoMiniaturas getTipoMin() {
+        return tipoMin;
     }
 
-    public void setId_tipMin_min(int id_tipMin_min) {
-        this.id_tipMin_min = id_tipMin_min;
+    public void setTipoMin(TipoMiniaturas tipoMin) {
+        this.tipoMin = tipoMin;
     }
 
-    public int getId_tem_min() {
-        return id_tem_min;
+    public Temas getTema() {
+        return tema;
     }
 
-    public void setId_tem_min(int id_tem_min) {
-        this.id_tem_min = id_tem_min;
+    public void setTema(Temas tema) {
+        this.tema = tema;
     }
-    
-    
 
 }

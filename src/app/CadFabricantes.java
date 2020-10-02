@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app_view;
+package app;
 
-import bll_regrasdenegocios.FabricanteBll;
-import java.sql.Connection;
+import bll.FabricanteBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,8 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model_classededados.Fabricantes;
-import util_utilidades.Conexao;
+import model.Fabricantes;
 
 /**
  *
@@ -55,9 +53,9 @@ public class CadFabricantes extends javax.swing.JDialog {
      */
     public CadFabricantes(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
-        initComponents();
         criarTblFabricantes();
         consultaFabricantes();
+        initComponents();
 
     }
 
@@ -80,7 +78,7 @@ public class CadFabricantes extends javax.swing.JDialog {
             modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
                 listaFabricantes.get(i).getNome()});
         }
-        
+
     }
 
     private void limpaCampos() {
@@ -232,7 +230,7 @@ public class CadFabricantes extends javax.swing.JDialog {
             } else {
                 fabricanteBll.alterar(fabricante);
             }
-                consultaFabricantes();
+            consultaFabricantes();
 
             limpaCampos();
 
@@ -253,6 +251,7 @@ public class CadFabricantes extends javax.swing.JDialog {
     private void jTableFabricantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFabricantesMouseClicked
         int linha = jTableFabricantes.getSelectedRow();
         Integer codigo = (Integer) jTableFabricantes.getValueAt(linha, 0);
+        System.out.println(codigo);
         preencherCampos((int) codigo);
     }//GEN-LAST:event_jTableFabricantesMouseClicked
 
@@ -277,6 +276,8 @@ public class CadFabricantes extends javax.swing.JDialog {
                 jTextFieldNomeFabricante.setText(fabricante.getNome());
                 jTextFieldCodFabricante.setText(id + "");
                 jButtonSalvar.setLabel("EDITAR");
+                System.out.println(fabricante);
+
             } else {
                 jButtonSalvar.setLabel("SALVAR");
             }

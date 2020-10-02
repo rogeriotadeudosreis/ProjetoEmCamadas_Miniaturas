@@ -8,7 +8,7 @@ CREATE TABLE fotos (
 );
 */
 
-package model_classededados;
+package model;
 
 /**
  *
@@ -19,16 +19,16 @@ public class Fotos {
     private int id;
     private String path;
     private String descricao;
-    private int id_min;
+    private Miniaturas miniatura;
 
     public Fotos() {
     }
 
-    public Fotos(int id, String path, String descricao, int id_min) {
+    public Fotos(int id, String path, String descricao, Miniaturas miniatura) {
         this.id = id;
         this.path = path;
         this.descricao = descricao;
-        this.id_min = id_min;
+        this.miniatura = miniatura;
     }
 
     public int getId() {
@@ -55,14 +55,16 @@ public class Fotos {
         this.descricao = descricao;
     }
 
-    public int getId_min() {
-        return id_min;
+    public Miniaturas getMiniatura() {
+        return miniatura;
     }
 
-    public void setId_min(int id_min) {
-        this.id_min = id_min;
+    public void setMiniatura(Miniaturas miniatura) {
+        this.miniatura = miniatura;
     }
-    
-    
+
+   
+
+   
     
 }

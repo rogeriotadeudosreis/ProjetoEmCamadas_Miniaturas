@@ -1,8 +1,8 @@
-package bll_regrasdenegocios;
+package bll;
 
-import dal_acessosaosdados.FabricanteDal;
+import dal.FabricanteDal;
 import java.util.List;
-import model_classededados.Fabricantes;
+import model.Fabricantes;
 
 /**
  *

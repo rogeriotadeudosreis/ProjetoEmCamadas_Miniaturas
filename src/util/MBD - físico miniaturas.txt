@@ -1,0 +1,66 @@
+CREATE TABLE fabricantes (
+   id_fab SERIAL PRIMARY KEY,
+   nome_fab VARCHAR (80) NOT NULL
+);
+
+CREATE TABLE tipo_miniaturas (
+   id_tipMin SERIAL PRIMARY KEY,
+   tipo_tipMin VARCHAR (80) NOT NULL
+);
+
+CREATE TABLE temas (
+   id_tem SERIAL PRIMARY KEY,
+   nome_tem VARCHAR (80) NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE fotos (
+   id_fot SERIAL PRIMARY KEY,
+   caminho_fot VARCHAR (150) NOT NULL,
+   descricao_fot VARCHAR (80) NOT NULL,
+   id_min_fot INTEGER,
+   FOREIGN KEY (id_min_fot) REFERENCES miniaturas (id_min)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE miniaturas (
+   id_min SERIAL PRIMARY KEY,
+   modelo_min VARCHAR(80) NOT NULL,
+   ano_min TIMESTAMP,
+   observacoes_min VARCHAR(100),
+   edicao_min VARCHAR(80) NOT NULL,
+   escala_min VARCHAR(80) NOT NULL,
+   valor_min NUMERIC(7,2) NOT NULL,
+   id_fab_min INTEGER,
+   id_tipMin_min INTEGER,
+   id_tem_min INTEGER,
+   FOREIGN KEY (id_fab_min) REFERENCES fabricantes (id_fab),
+   FOREIGN KEY (id_tipMin_min) REFERENCES tipo_miniaturas (id_tipMin),
+   FOREIGN KEY (id_tem_min) REFERENCES temas (id_tem)   
+);
+
+
+
+
+
+
+

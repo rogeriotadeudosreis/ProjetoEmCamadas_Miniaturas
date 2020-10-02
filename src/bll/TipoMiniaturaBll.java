@@ -1,8 +1,8 @@
-package bll_regrasdenegocios;
+package bll;
 
-import dal_acessosaosdados.Tipo_MiniaturaDal;
+import dal.Tipo_MiniaturaDal;
 import java.util.List;
-import model_classededados.TipoMiniaturas;
+import model.TipoMiniaturas;
 
 /**
  *

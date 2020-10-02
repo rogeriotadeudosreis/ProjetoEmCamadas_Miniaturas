@@ -1,28 +1,20 @@
 /*
-CREATE TABLE temas (
-   id_tem SERIAL PRIMARY KEY,
-   nome_tem VARCHAR (80) NOT NULL
+CREATE TABLE fabricantes (
+   id_fab SERIAL PRIMARY KEY,
+   nome_fab VARCHAR (80) NOT NULL
 );
 */
 
-package model_classededados;
+package model;
 
 /**
  *
  * @author roger
  */
-public class Temas {
+public class Fabricantes {
     
     private int id;
     private String nome;
-
-    public Temas() {
-    }
-
-    public Temas(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
 
     public int getId() {
         return id;
@@ -39,6 +31,17 @@ public class Temas {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        
+        String saida = "";
+        saida += this.id;
+        saida += this.nome;
+        return saida; 
+    }
+    
+    
     
     
     

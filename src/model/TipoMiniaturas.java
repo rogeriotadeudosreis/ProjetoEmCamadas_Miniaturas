@@ -5,7 +5,7 @@ CREATE TABLE tipo_miniaturas (
 );
 */
 
-package model_classededados;
+package model;
 
 /**
  *

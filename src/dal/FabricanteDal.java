@@ -4,7 +4,7 @@ CREATE TABLE fabricantes (
    nome_fab VARCHAR (80) NOT NULL
 );
  */
-package dal_acessosaosdados;
+package dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model_classededados.Fabricantes;
-import util_utilidades.Conexao;
+import model.Fabricantes;
+import util.Conexao;
 
 /**
  *
@@ -51,7 +51,7 @@ public class FabricanteDal {
             + erro.getMessage());
         }
     }
-
+    
     public void deleteFabricante(int id) throws Exception {
         String sql = "DELETE FROM fabricantes WHERE id_fab=?";
         try {
@@ -103,7 +103,7 @@ public class FabricanteDal {
         }
         return listFabricantes;
     }
-
+    
     public Fabricantes getFabricanteById(int id) throws Exception {
         Fabricantes fabricante = new Fabricantes();
         String sql = "SELECT * FROM fabricantes WHERE id_fab=?";
@@ -123,3 +123,14 @@ public class FabricanteDal {
         return fabricante;
     }
 }
+
+
+
+
+
+
+
+
+
+
+

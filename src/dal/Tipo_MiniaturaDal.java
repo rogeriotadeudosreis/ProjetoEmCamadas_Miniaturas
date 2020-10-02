@@ -4,7 +4,7 @@
    tipo_tipMin VARCHAR (80) NOT NULL
 );
  */
-package dal_acessosaosdados;
+package dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model_classededados.Fabricantes;
-import model_classededados.TipoMiniaturas;
-import util_utilidades.Conexao;
+import model.Fabricantes;
+import model.TipoMiniaturas;
+import util.Conexao;
 
 /**
  *
@@ -103,7 +103,7 @@ public class Tipo_MiniaturaDal {
         return list;
     }
       
-       public TipoMiniaturas getFabricanteById(int id) throws Exception {
+       public TipoMiniaturas getTipoMinById(int id) throws Exception {
         TipoMiniaturas tipo = new TipoMiniaturas();
         String sql = "SELECT * FROM tipo_miniaturas WHERE id_fab=?";
         try {
@@ -112,8 +112,8 @@ public class Tipo_MiniaturaDal {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                tipo.setId(rs.getInt("id_fab"));
-                tipo.setTipo(rs.getString("nome_fab"));
+                tipo.setId(rs.getInt("id_tipMin"));
+                tipo.setTipo(rs.getString("tipo_tipMin"));
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao buscar este registro de tipo de miniaturas\n"

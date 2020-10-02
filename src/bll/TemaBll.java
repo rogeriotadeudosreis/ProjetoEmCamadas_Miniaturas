@@ -1,8 +1,8 @@
-package bll_regrasdenegocios;
+package bll;
 
-import dal_acessosaosdados.TemaDal;
+import dal.TemaDal;
 import java.util.List;
-import model_classededados.Temas;
+import model.Temas;
 
 /**
  *

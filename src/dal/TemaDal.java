@@ -1,4 +1,4 @@
-package dal_acessosaosdados;
+package dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model_classededados.Fabricantes;
-import model_classededados.Temas;
-import util_utilidades.Conexao;
+import model.Fabricantes;
+import model.Temas;
+import util.Conexao;
 
 /**
  *
