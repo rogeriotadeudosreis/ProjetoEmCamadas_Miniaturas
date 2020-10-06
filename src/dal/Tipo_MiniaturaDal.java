@@ -69,7 +69,7 @@ public class Tipo_MiniaturaDal {
     }
     
      public void updateTipoMiniaturas(TipoMiniaturas tipo) throws Exception {
-        String sql = "UPDATE tipo_miniaturas SET tipo_min=? WHERE id_tipmin=?";
+        String sql = "UPDATE tipo_miniaturas SET tipo_tipMin=? WHERE id_tipmin=?";
         try {
             PreparedStatement preparedStatement
                     = conexao.prepareStatement(sql);
@@ -93,7 +93,7 @@ public class Tipo_MiniaturaDal {
             while (rs.next()) {
                 TipoMiniaturas tipo = new TipoMiniaturas();
                 tipo.setId(rs.getInt("id_tipmin"));
-                tipo.setTipo(rs.getString("tipo_min"));
+                tipo.setTipo(rs.getString("tipo_tipMin"));
                 list.add(tipo);
             }
         } catch (Exception erro) {
@@ -105,7 +105,7 @@ public class Tipo_MiniaturaDal {
       
        public TipoMiniaturas getTipoMinById(int id) throws Exception {
         TipoMiniaturas tipo = new TipoMiniaturas();
-        String sql = "SELECT * FROM tipo_miniaturas WHERE id_fab=?";
+        String sql = "SELECT * FROM tipo_miniaturas WHERE id_tipMin=?";
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, id);

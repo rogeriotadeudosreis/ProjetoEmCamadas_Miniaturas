@@ -2,6 +2,7 @@ package bll;
 
 import dal.Tipo_MiniaturaDal;
 import java.util.List;
+import model.Fabricantes;
 import model.TipoMiniaturas;
 
 /**
@@ -31,7 +32,11 @@ public class TipoMiniaturaBll {
         dal.deleteTipoMiniaturas(tipo.getId());
     }
     
-    public List<TipoMiniaturas> getConsultaPorId (int id)throws Exception{
+    public List<TipoMiniaturas> getConsulta() throws Exception {
         return dal.getAllTipoMiniaturas();
+    }
+    
+    public TipoMiniaturas getConsultaPorId (int id)throws Exception{
+        return dal.getTipoMinById(id);
     }
 }

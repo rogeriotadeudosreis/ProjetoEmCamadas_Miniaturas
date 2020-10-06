@@ -37,4 +37,6 @@ public class FabricanteBll {
     public Fabricantes getConsultaPorId(int id) throws Exception {
         return dal.getFabricanteById(id);
     }
+    
+  
 }

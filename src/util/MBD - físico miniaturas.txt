@@ -13,12 +13,6 @@ CREATE TABLE temas (
    nome_tem VARCHAR (80) NOT NULL
 );
 
-
-
-
-
-
-
 CREATE TABLE fotos (
    id_fot SERIAL PRIMARY KEY,
    caminho_fot VARCHAR (150) NOT NULL,
@@ -26,21 +20,6 @@ CREATE TABLE fotos (
    id_min_fot INTEGER,
    FOREIGN KEY (id_min_fot) REFERENCES miniaturas (id_min)
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 CREATE TABLE miniaturas (
    id_min SERIAL PRIMARY KEY,

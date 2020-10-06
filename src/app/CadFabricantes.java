@@ -251,13 +251,13 @@ public class CadFabricantes extends javax.swing.JDialog {
     private void jTableFabricantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFabricantesMouseClicked
         int linha = jTableFabricantes.getSelectedRow();
         Integer codigo = (Integer) jTableFabricantes.getValueAt(linha, 0);
-        System.out.println(codigo);
         preencherCampos((int) codigo);
     }//GEN-LAST:event_jTableFabricantesMouseClicked
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
         limpaCampos();
         jTextFieldNomeFabricante.requestFocus();
+        jButtonSalvar.setLabel("SALVAR");
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
@@ -276,7 +276,7 @@ public class CadFabricantes extends javax.swing.JDialog {
                 jTextFieldNomeFabricante.setText(fabricante.getNome());
                 jTextFieldCodFabricante.setText(id + "");
                 jButtonSalvar.setLabel("EDITAR");
-                System.out.println(fabricante);
+                jTextFieldNomeFabricante.requestFocus();
 
             } else {
                 jButtonSalvar.setLabel("SALVAR");

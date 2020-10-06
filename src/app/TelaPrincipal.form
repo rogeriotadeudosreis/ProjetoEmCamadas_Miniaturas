@@ -21,11 +21,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="TEMA"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemCadTemasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCadTipoDeMiniaturas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="TIPO DE MINIATURA"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemCadTipoDeMiniaturasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCadMiniaturas">
               <Properties>

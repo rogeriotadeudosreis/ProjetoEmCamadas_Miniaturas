@@ -63,9 +63,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBarraCadastros.add(jMenuItemCadFabricantes);
 
         jMenuItemCadTemas.setText("TEMA");
+        jMenuItemCadTemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadTemasActionPerformed(evt);
+            }
+        });
         jMenuBarraCadastros.add(jMenuItemCadTemas);
 
         jMenuItemCadTipoDeMiniaturas.setText("TIPO DE MINIATURA");
+        jMenuItemCadTipoDeMiniaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadTipoDeMiniaturasActionPerformed(evt);
+            }
+        });
         jMenuBarraCadastros.add(jMenuItemCadTipoDeMiniaturas);
 
         jMenuItemCadMiniaturas.setText("MINIATURAS");
@@ -121,6 +131,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemCadFabricantesActionPerformed
 
+    private void jMenuItemCadTipoDeMiniaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadTipoDeMiniaturasActionPerformed
+        try {
+            new CadTipoMiniaturas(this, true).setVisible(true);
+            this.setVisible(true);
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItemCadTipoDeMiniaturasActionPerformed
+
+    private void jMenuItemCadTemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadTemasActionPerformed
+        try {
+            new CadTemas(this, true).setVisible(true);
+            this.setVisible(true);
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItemCadTemasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -132,7 +160,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
