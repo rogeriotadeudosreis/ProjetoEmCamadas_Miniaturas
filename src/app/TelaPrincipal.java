@@ -79,6 +79,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBarraCadastros.add(jMenuItemCadTipoDeMiniaturas);
 
         jMenuItemCadMiniaturas.setText("MINIATURAS");
+        jMenuItemCadMiniaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadMiniaturasActionPerformed(evt);
+            }
+        });
         jMenuBarraCadastros.add(jMenuItemCadMiniaturas);
 
         jMenuBar1.add(jMenuBarraCadastros);
@@ -149,6 +154,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemCadTemasActionPerformed
 
+    private void jMenuItemCadMiniaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadMiniaturasActionPerformed
+        try {
+            new CadMiniaturas(this, true).setVisible(true);
+            this.setVisible(true);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItemCadMiniaturasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,7 +173,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

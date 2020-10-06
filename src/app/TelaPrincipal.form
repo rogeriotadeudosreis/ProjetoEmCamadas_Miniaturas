@@ -37,6 +37,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="MINIATURAS"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemCadMiniaturasActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

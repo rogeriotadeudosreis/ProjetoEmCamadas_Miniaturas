@@ -3,8 +3,7 @@ CREATE TABLE tipo_miniaturas (
    id_tipMin SERIAL PRIMARY KEY,
    tipo_tipMin VARCHAR (80) NOT NULL
 );
-*/
-
+ */
 package model;
 
 /**
@@ -12,7 +11,7 @@ package model;
  * @author roger
  */
 public class TipoMiniaturas {
-    
+
     private int id;
     private String tipo;
 
@@ -39,7 +38,16 @@ public class TipoMiniaturas {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    
-    
+
+    public void setSplitTipoMiniatura(String combBox) throws Exception {
+        try {
+            String[] vetor = combBox.split("-");
+            this.id = Integer.parseInt(vetor[0]);
+            this.tipo = vetor[1];
+
+        } catch (Exception erro) {
+            throw new Exception("Erro !!!" + erro.getMessage());
+        }
+    }
+
 }

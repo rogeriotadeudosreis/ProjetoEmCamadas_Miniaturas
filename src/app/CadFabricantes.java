@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import jdk.nashorn.internal.runtime.regexp.joni.Option;
 import model.Fabricantes;
 
 /**
@@ -195,7 +196,7 @@ public class CadFabricantes extends javax.swing.JDialog {
                     .addComponent(jButtonConsultar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,7 +210,7 @@ public class CadFabricantes extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelCadFabricantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -221,27 +222,33 @@ public class CadFabricantes extends javax.swing.JDialog {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
-        try {
+        if (jTextFieldNomeFabricante.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o nome do fabricante ");
+        } else {
 
-            fabricante.setNome(jTextFieldNomeFabricante.getText());
+            try {
 
-            if (jButtonSalvar.getLabel().equals("SALVAR")) {
-                fabricanteBll.adicionar(fabricante);
-            } else {
-                fabricanteBll.alterar(fabricante);
+                fabricante.setNome(jTextFieldNomeFabricante.getText());
+
+                if (jButtonSalvar.getLabel().equals("SALVAR")) {
+                    fabricanteBll.adicionar(fabricante);
+                } else {
+                    fabricanteBll.alterar(fabricante);
+                }
+                consultaFabricantes();
+                limpaCampos();
+
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
             }
-            consultaFabricantes();
-
-            limpaCampos();
-
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
+        jTextFieldNomeFabricante.requestFocus();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             fabricanteBll.remover(fabricanteBll.getConsultaPorId(fabricante.getId()));
+            consultaFabricantes();
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
@@ -298,7 +305,7 @@ public class CadFabricantes extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

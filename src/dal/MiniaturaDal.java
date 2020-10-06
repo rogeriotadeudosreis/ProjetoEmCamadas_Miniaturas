@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model.Fotos;
 import model.Miniaturas;
 import util.Conexao;
 
@@ -19,7 +18,7 @@ public class MiniaturaDal {
 
     private static MiniaturaDal instance = null;
     private Connection conexao;
-
+    
     private MiniaturaDal() {
         conexao = Conexao.getConexao();
     }
@@ -30,12 +29,12 @@ public class MiniaturaDal {
         }
         return instance;
     }
-
+    
     public void addMiniatura(Miniaturas miniatura) throws Exception {
 
         String sql = "INSERT INTO miniaturas(modelo_min, ano_min, observacoes_min,"
                 + "edicao_min, escala_min, valor_min, id_fab_min, id_tipMin_min,"
-                + "id_tem_min) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9)";
+                + "id_tem_min) VALUES (?,?,?,?,?,?,?,?,?)";
         try {
 
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
@@ -109,7 +108,7 @@ public class MiniaturaDal {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 Miniaturas mini = new Miniaturas();
-                mini.setId(rs.getInt("id_mim"));
+                mini.setId(rs.getInt("id_min"));
                 mini.setModelo_min(rs.getString("modelo_min"));
                 mini.setAno_min(rs.getInt("ano_min"));
                 mini.setObservacoes_min(rs.getString("observacoes_min"));
@@ -141,7 +140,7 @@ public class MiniaturaDal {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                mini.setId(rs.getInt("id_mim"));
+                mini.setId(rs.getInt("id_min"));
                 mini.setModelo_min(rs.getString("modelo_min"));
                 mini.setAno_min(rs.getInt("ano_min"));
                 mini.setObservacoes_min(rs.getString("observacoes_min"));

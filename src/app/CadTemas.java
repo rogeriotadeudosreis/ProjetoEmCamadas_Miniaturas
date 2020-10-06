@@ -23,11 +23,11 @@ import model.Temas;
  * @author roger
  */
 public class CadTemas extends javax.swing.JDialog {
-    
+
     private DefaultTableModel modelo = new DefaultTableModel();
     private TemaBll temaBll = new TemaBll();
     private Temas tema = new Temas();
-    
+
     private static Date createNewDate(String data) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -57,34 +57,33 @@ public class CadTemas extends javax.swing.JDialog {
         consultaTemas();
         initComponents();
     }
-    
-    private void criarTblTemas(){
+
+    private void criarTblTemas() {
         jTableTemas = new JTable(modelo);
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
-        
+
         jTableTemas.getColumnModel().getColumn(0).setMinWidth(10);
         jTableTemas.getColumnModel().getColumn(0).setMaxWidth(10);
         jTableTemas.getColumnModel().getColumn(0).setPreferredWidth(100);
     }
-    
-    private void consultaTemas() throws Exception{        
+
+    private void consultaTemas() throws Exception {
         modelo.setRowCount(0);
-        
+
         List<Temas> listaTemas = new ArrayList<Temas>();
         listaTemas = temaBll.getConsulta();
         for (int i = 0; i < listaTemas.size(); i++) {
-            modelo.addRow(new Object[] {listaTemas.get(i).getId(),
+            modelo.addRow(new Object[]{listaTemas.get(i).getId(),
                 listaTemas.get(i).getNome()});
-            };
-        }
-    
-    private void limpaCampos(){
+        };
+    }
+
+    private void limpaCampos() {
         jTextFieldCodTema.setText("");
         jTextFieldNomeTema.setText("");
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,27 +220,34 @@ public class CadTemas extends javax.swing.JDialog {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
-        try {
+        if (jTextFieldNomeTema.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o nome do tema da miniatura");
+        } else {
 
-            tema.setNome(jTextFieldNomeTema.getText());
+            try {
 
-            if (jButtonSalvar.getLabel().equals("SALVAR")) {
-                temaBll.adicionar(tema);
-            } else {
-                temaBll.alterar(tema);
+                tema.setNome(jTextFieldNomeTema.getText());
+
+                if (jButtonSalvar.getLabel().equals("SALVAR")) {
+                    temaBll.adicionar(tema);
+                } else {
+                    temaBll.alterar(tema);
+                }
+                consultaTemas();
+
+                limpaCampos();
+
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
             }
-            consultaTemas();
-
-            limpaCampos();
-
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
+        jTextFieldNomeTema.requestFocus();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             temaBll.remover(temaBll.getConsultaPorId(tema.getId()));
+            consultaTemas();
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
@@ -268,24 +274,23 @@ public class CadTemas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonConsultarActionPerformed
 
-    private void preencherCampos(int id){
+    private void preencherCampos(int id) {
         try {
             if (id > 0) {
                 tema = temaBll.getConsultaPorId(id);
                 jTextFieldNomeTema.setText(tema.getNome());
-                jTextFieldCodTema.setText(tema.getId()+ "");
+                jTextFieldCodTema.setText(tema.getId() + "");
                 jButtonSalvar.setLabel("EDITAR");
                 jTextFieldNomeTema.requestFocus();
-            }else{
+            } else {
                 jButtonSalvar.setLabel("SALVAR");
             }
-            
-            
+
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção!!!" + erro.getMessage());
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

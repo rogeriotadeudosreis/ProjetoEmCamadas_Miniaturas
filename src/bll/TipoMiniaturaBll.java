@@ -2,7 +2,6 @@ package bll;
 
 import dal.Tipo_MiniaturaDal;
 import java.util.List;
-import model.Fabricantes;
 import model.TipoMiniaturas;
 
 /**
@@ -10,7 +9,6 @@ import model.TipoMiniaturas;
  * @author roger
  */
 public class TipoMiniaturaBll {
-    
     //
     private static final long serialVersionUID = 1L;
     private Tipo_MiniaturaDal dal;

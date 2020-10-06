@@ -223,6 +223,10 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
+        if(jTextFieldNomeTipoMiniatura.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o nome do tipo de miniatura");
+        }else {
+        
         try {
 
             tipoMin.setTipo(jTextFieldNomeTipoMiniatura.getText());
@@ -239,11 +243,14 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
+        }
+        jTextFieldNomeTipoMiniatura.requestFocus();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             tipoMinBll.removerTipoDeMiniaturas(tipoMinBll.getConsultaPorId(tipoMin.getId()));
+            consultaTipoMiniatura();
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);

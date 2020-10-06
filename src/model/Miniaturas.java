@@ -135,4 +135,6 @@ public class Miniaturas {
         this.tema = tema;
     }
 
+   
+
 }
