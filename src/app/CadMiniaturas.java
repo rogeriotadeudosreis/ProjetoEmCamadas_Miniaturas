@@ -41,27 +41,27 @@ public class CadMiniaturas extends javax.swing.JDialog {
     public CadMiniaturas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
-         consultarMiniaturas(miniBll.getConsultar());
+        consultarMiniaturas(miniBll.getConsultar());
 
         List<Fabricantes> listaFabricantes = new ArrayList<Fabricantes>();
         listaFabricantes = fabBll.getConsulta();
         for (int i = 0; i < listaFabricantes.size(); i++) {
             Fabricantes aux = listaFabricantes.get(i);
-            jComboBoxFabricantes.addItem(aux.getId() + "-" + aux.getNome().toUpperCase());
+            jComboBoxFabricantes.addItem(aux.getId() + " - " + aux.getNome().toUpperCase());
         }
 
         List<TipoMiniaturas> listaTipoDeMiniaturas = new ArrayList<>();
         listaTipoDeMiniaturas = tipoBll.getConsulta();
         for (int pos = 0; pos < listaTipoDeMiniaturas.size(); pos++) {
             TipoMiniaturas aux = listaTipoDeMiniaturas.get(pos);
-            jComboBoxTiposDeMiniatura.addItem(aux.getId() + "-" + aux.getTipo());
+            jComboBoxTiposDeMiniatura.addItem(aux.getId() + " - " + aux.getTipo().toUpperCase());
         }
 
         List<Temas> listaTemas = new ArrayList<>();
         listaTemas = temaBll.getConsulta();
         for (int pos = 0; pos < listaTemas.size(); pos++) {
             Temas aux = listaTemas.get(pos);
-            jComboBoxTemas.addItem(aux.getId() + "-" + aux.getNome());
+            jComboBoxTemas.addItem(aux.getId() + " - " + aux.getNome().toUpperCase());
         }
     }
 
@@ -88,7 +88,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
     private void consultarMiniaturas(List<Miniaturas> lista) throws Exception {
         DefaultTableModel model = (DefaultTableModel) jTableMiniaturas.getModel();
         model.setNumRows(0);
-       // colocar aqui nesta linha o método de ordenação
+        // colocar aqui nesta linha o método de ordenação
         for (int pos = 0; pos < lista.size(); pos++) {
             String[] linha = new String[10];
             Miniaturas aux = lista.get(pos);
@@ -98,7 +98,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
             linha[3] = aux.getObservacoes_min().toUpperCase();
             linha[4] = aux.getEdicao_min().toUpperCase();
             linha[5] = aux.getEscala_min().toUpperCase();
-            linha[6] = aux.getValor_min() + "";
+            linha[6] = String.format("%.2f", aux.getValor_min());
             linha[7] = aux.getFabricante().getNome().toUpperCase();
             linha[8] = aux.getTipoMin().getTipo().toUpperCase();
             linha[9] = aux.getTema().getNome().toUpperCase();
@@ -130,10 +130,13 @@ public class CadMiniaturas extends javax.swing.JDialog {
                 jTextFieldEdicao.setText(mini.getEdicao_min());
                 jTextFieldEscala.setText(mini.getEscala_min());
                 jTextFieldValor.setText(mini.getValor_min() + "");
-                
-                jComboBoxFabricantes.setSelectedItem(mini.getFabricante().getNome());
-                jComboBoxTiposDeMiniatura.setSelectedItem(mini.getTipoMin().getTipo());
-                jComboBoxTemas.setSelectedItem(mini.getTema().getNome());
+
+                String fabricante = mini.getFabricante().getId() + " - " + mini.getFabricante().getNome().toUpperCase();
+                jComboBoxFabricantes.setSelectedItem(fabricante);
+                String tipoMin = mini.getTipoMin().getId() + " - " + mini.getTipoMin().getTipo().toUpperCase();
+                jComboBoxTiposDeMiniatura.setSelectedItem(tipoMin);
+                String tema = mini.getTema().getId() + " - " + mini.getTema().getNome().toUpperCase();
+                jComboBoxTemas.setSelectedItem(tema);
 
                 jButtonSalvar.setLabel("EDITAR");
                 jTextFieldModelo.requestFocus();
@@ -184,6 +187,8 @@ public class CadMiniaturas extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Miniaturas");
         setResizable(false);
+
+        jPanelMiniaturas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         jLabel1.setText("Id:");
 
@@ -378,7 +383,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
                     .addComponent(Excluir)
                     .addComponent(jButtonConsultar)
                     .addComponent(jButtonNovo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -407,29 +412,29 @@ public class CadMiniaturas extends javax.swing.JDialog {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
         try {
-            
+
             mini.setModelo_min(jTextFieldModelo.getText());
             mini.setAno_min(Integer.parseInt(jTextFieldAno.getText()));
             mini.setObservacoes_min(jTextFieldObservacoes.getText());
             mini.setEdicao_min(jTextFieldEdicao.getText());
             mini.setEscala_min(jTextFieldEscala.getText());
             mini.setValor_min(Double.parseDouble(jTextFieldValor.getText()));
-            
+
             Fabricantes auxFab = new Fabricantes();
             auxFab.setSplitFabricante(jComboBoxFabricantes.getSelectedItem().toString());
             mini.setFabricante(auxFab);
-            
+
             TipoMiniaturas auxTipo = new TipoMiniaturas();
             auxTipo.setSplitTipoMiniatura(jComboBoxTiposDeMiniatura.getSelectedItem().toString());
             mini.setTipoMin(auxTipo);
-            
+
             Temas auxTema = new Temas();
             auxTema.setSplitTema(jComboBoxTemas.getSelectedItem().toString());
             mini.setTema(auxTema);
-            
+
             if (jButtonSalvar.getLabel().equals("SALVAR")) {
                 miniBll.adicionar(mini);
-            }else{
+            } else {
                 miniBll.alterar(mini);
             }
             consultarMiniaturas(miniBll.getConsultar());
@@ -438,15 +443,15 @@ public class CadMiniaturas extends javax.swing.JDialog {
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção !!!" + erro.getMessage());
         }
-        
+
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
         try {
-            
+
             miniBll.deletar(mini.getId());
             consultarMiniaturas(miniBll.getConsultar());
-            
+
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
         }
@@ -454,9 +459,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
 
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
         try {
-            
+
             consultarMiniaturas(miniBll.getConsultar());
-            
+
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção !!!\n " + erro.getMessage());
         }
@@ -474,9 +479,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
     private void jTableMiniaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMiniaturasMouseClicked
         try {
             int linha = jTableMiniaturas.getSelectedRow();
-            Integer codigo = (Integer) jTableMiniaturas.getValueAt(linha, 0);
+            Integer codigo = Integer.parseInt(jTableMiniaturas.getValueAt(linha, 0).toString());
             preencheCampos((int) codigo);
-            
+
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção\n " + erro.getMessage());
         }

@@ -48,10 +48,10 @@ public class FabricanteDal {
 
         } catch (SQLException erro) {
             throw new Exception("Ocorreu um erro ao adicionar este registro\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
     }
-    
+
     public void deleteFabricante(int id) throws Exception {
         String sql = "DELETE FROM fabricantes WHERE id_fab=?";
         try {
@@ -64,7 +64,7 @@ public class FabricanteDal {
 
         } catch (SQLException erro) {
             throw new Exception("Ocorreu um erro ao deletar este registro!\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ public class FabricanteDal {
 
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao alterar este registro\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
 
     }
@@ -95,15 +95,17 @@ public class FabricanteDal {
                 Fabricantes fabricante = new Fabricantes();
                 fabricante.setId(rs.getInt("id_fab"));
                 fabricante.setNome(rs.getString("nome_fab"));
+
                 listFabricantes.add(fabricante);
+                
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao consultar os registros de fabricantes\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
         return listFabricantes;
     }
-    
+
     public Fabricantes getFabricanteById(int id) throws Exception {
         Fabricantes fabricante = new Fabricantes();
         String sql = "SELECT * FROM fabricantes WHERE id_fab=?";
@@ -118,19 +120,8 @@ public class FabricanteDal {
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao buscar este registro de fabricantes\n"
-             + erro.getMessage());
+                    + erro.getMessage());
         }
         return fabricante;
     }
 }
-
-
-
-
-
-
-
-
-
-
-

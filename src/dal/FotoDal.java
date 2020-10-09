@@ -33,7 +33,7 @@ public class FotoDal {
     public void addFoto(Fotos foto) throws Exception {
 
         String sql = "INSERT INTO foto(caminho_fot, descricao_fot, "
-                + "id_min_fot) VALUES (?1,?2,?3)";
+                + "id_min_fot) VALUES (?,?,?)";
         try {
 
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);

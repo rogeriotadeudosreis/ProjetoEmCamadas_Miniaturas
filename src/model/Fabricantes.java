@@ -50,13 +50,11 @@ public class Fabricantes {
     }
     
     public void setSplitFabricante (String combBox)throws Exception{
-        String[] vetor = combBox.split("-");
+        String[] vetor = combBox.split(" - ");
         this.id = Integer.parseInt(vetor[0]);
         this.nome = vetor[1];
     }
-    
-    
-    
-    
+
+       
     
 }

@@ -8,6 +8,8 @@ package app;
 import bll.FabricanteBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -67,7 +69,7 @@ public class CadFabricantes extends javax.swing.JDialog {
 
         jTableFabricantes.getColumnModel().getColumn(0).setMinWidth(10);
         jTableFabricantes.getColumnModel().getColumn(0).setMaxWidth(10);
-        jTableFabricantes.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTableFabricantes.getColumnModel().getColumn(1).setPreferredWidth(350);
     }
 
     private void consultaFabricantes() throws Exception {
@@ -75,13 +77,16 @@ public class CadFabricantes extends javax.swing.JDialog {
 
         List<Fabricantes> listaFabricantes = new ArrayList<Fabricantes>();
         listaFabricantes = fabricanteBll.getConsulta();
+        
+        //Chamado do método para ordenar a lista de fabricantes
+        fabricanteBll.ordenaListaFabricantes(listaFabricantes);
+        
         for (int i = 0; i < listaFabricantes.size(); i++) {
             modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
-                listaFabricantes.get(i).getNome()});
+                listaFabricantes.get(i).getNome().toUpperCase()});
         }
-
     }
-
+    
     private void limpaCampos() {
         jTextFieldCodFabricante.setText("");
         jTextFieldNomeFabricante.setText("");

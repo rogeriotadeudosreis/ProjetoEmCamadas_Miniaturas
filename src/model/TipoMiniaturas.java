@@ -41,7 +41,7 @@ public class TipoMiniaturas {
 
     public void setSplitTipoMiniatura(String combBox) throws Exception {
         try {
-            String[] vetor = combBox.split("-");
+            String[] vetor = combBox.split(" - ");
             this.id = Integer.parseInt(vetor[0]);
             this.tipo = vetor[1];
 
@@ -49,5 +49,7 @@ public class TipoMiniaturas {
             throw new Exception("Erro !!!" + erro.getMessage());
         }
     }
+
+   
 
 }

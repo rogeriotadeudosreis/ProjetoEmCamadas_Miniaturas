@@ -8,6 +8,7 @@ package app;
 import bll.TipoMiniaturaBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Fabricantes;
+import model.Temas;
 
 /**
  *
@@ -76,12 +78,18 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
 
         List<TipoMiniaturas> listaTipoMiniaturas = new ArrayList<TipoMiniaturas>();
         listaTipoMiniaturas = tipoMinBll.getConsulta();
+        
+        // Chamada do método para ordenar a lista de tipo de miniaturas
+        tipoMinBll.ordenaListaDeTipoDeMiniaturas(listaTipoMiniaturas);
+        
         for (int i = 0; i < listaTipoMiniaturas.size(); i++) {
             modelo.addRow(new Object[]{listaTipoMiniaturas.get(i).getId(),
-                listaTipoMiniaturas.get(i).getTipo()});
+                listaTipoMiniaturas.get(i).getTipo().toUpperCase()});
         }
 
     }
+    
+    
 
     private void limpaCampos() {
         jTextFieldCodTipoMiniatura.setText("");

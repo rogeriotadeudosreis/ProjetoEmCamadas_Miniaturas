@@ -8,6 +8,7 @@ package app;
 import bll.TemaBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -73,9 +74,13 @@ public class CadTemas extends javax.swing.JDialog {
 
         List<Temas> listaTemas = new ArrayList<Temas>();
         listaTemas = temaBll.getConsulta();
+
+        // Chamda do método para ordenar a lista de temas 
+        temaBll.ordenaListaDeTemas(listaTemas);
+
         for (int i = 0; i < listaTemas.size(); i++) {
             modelo.addRow(new Object[]{listaTemas.get(i).getId(),
-                listaTemas.get(i).getNome()});
+                listaTemas.get(i).getNome().toUpperCase()});
         };
     }
 

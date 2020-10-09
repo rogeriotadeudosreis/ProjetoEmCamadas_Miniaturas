@@ -18,7 +18,7 @@ CREATE TABLE miniaturas (
  */
 package model;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -36,13 +36,14 @@ public class Miniaturas {
     private Fabricantes fabricante;
     private TipoMiniaturas tipoMin;
     private Temas tema;
+    private List<Fotos> fotos;
 
     public Miniaturas() {
     }
 
     public Miniaturas(String modelo_min, int ano_min, String observacoes_min,
             String edicao_min, String escala_min, double valor_min,
-            Fabricantes fabricante, TipoMiniaturas tipoMin, Temas tema) {
+            Fabricantes fabricante, TipoMiniaturas tipoMin, Temas tema, List<Fotos> fotos) {
 
         this.modelo_min = modelo_min;
         this.ano_min = ano_min;
@@ -53,6 +54,7 @@ public class Miniaturas {
         this.fabricante = fabricante;
         this.tipoMin = tipoMin;
         this.tema = tema;
+        this.fotos = fotos;
     }
 
     public int getId() {
@@ -135,6 +137,12 @@ public class Miniaturas {
         this.tema = tema;
     }
 
-   
+    public List<Fotos> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<Fotos> fotos) {
+        this.fotos = fotos;
+    }
 
 }
