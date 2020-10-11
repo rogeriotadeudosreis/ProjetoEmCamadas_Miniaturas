@@ -57,8 +57,8 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
     public CadTipoMiniaturas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         criarTblTipoMiniatura();
-        consultaTipoMiniatura();
         initComponents();
+        consultaTipoMiniatura();
         
         
     }
@@ -86,7 +86,7 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
             modelo.addRow(new Object[]{listaTipoMiniaturas.get(i).getId(),
                 listaTipoMiniaturas.get(i).getTipo().toUpperCase()});
         }
-
+        jTextFieldQuantRegistros.setText(listaTipoMiniaturas.size() + "");
     }
     
     
@@ -116,6 +116,8 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTipoDeMiniatura = new javax.swing.JTable(modelo);
         jButtonConsultar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldQuantRegistros = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Tipo de Miniaturas");
@@ -162,29 +164,35 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Quant.Registros:");
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addComponent(jButtonNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonConsultar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSalvar))
-                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldCodTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNomeTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldNomeTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSalvar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
@@ -202,7 +210,9 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonNovo)
-                    .addComponent(jButtonConsultar))
+                    .addComponent(jButtonConsultar)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -359,10 +369,12 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelCadFabricantes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableTipoDeMiniatura;
     private javax.swing.JTextField jTextFieldCodTipoMiniatura;
     private javax.swing.JTextField jTextFieldNomeTipoMiniatura;
+    private javax.swing.JTextField jTextFieldQuantRegistros;
     // End of variables declaration//GEN-END:variables
 }

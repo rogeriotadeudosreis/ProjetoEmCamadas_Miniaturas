@@ -5,11 +5,23 @@
  */
 package app;
 
+import bll.MiniaturaBll;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Fotos;
+import model.Miniaturas;
+
 /**
  *
  * @author roger
  */
 public class CadFotos extends javax.swing.JDialog {
+
+    Fotos foto;
+    Miniaturas mini;
+    MiniaturaBll miniBll;
 
     /**
      * Creates new form CadFotos
@@ -17,7 +29,42 @@ public class CadFotos extends javax.swing.JDialog {
     public CadFotos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jTextAreaDescricao.setLineWrap(true);
+        miniBll = new MiniaturaBll();
+        try {
+            List<Miniaturas> lista = new ArrayList<>();
+            lista = miniBll.getConsultar();
+            miniBll.ordenaListaMiniaturas(lista);
+            jComboBoxMiniaturas.removeAllItems();
+            jComboBoxMiniaturas.addItem("< Selecione a Miniatura >");
+            for (int pos = 0; pos < lista.size(); pos++) {
+                Miniaturas aux = lista.get(pos);
+                jComboBoxMiniaturas.addItem(String.format("%02d", aux.getId()) + " - " + aux.getModelo_min().toUpperCase());
+            }
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção !!!" + erro.getMessage());
+        }
     }
+    
+    public void limpaCampos(){
+        
+        jTextFieldIdFoto.setText("");
+        jComboBoxMiniaturas.setSelectedIndex(0);
+        jTextAreaDescricao.setText("");
+        jTextFieldQuantRegistros.setText("");
+        jTextFieldCaminhoDaFoto.setText("");
+        
+    }
+    
+    private void imprimir (List<Fotos> lista) throws Exception{
+    DefaultTableModel model = (DefaultTableModel) jTableFotosMiniatura.getModel();
+    model.setNumRows(0);
+    
+        
+    } 
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,15 +79,23 @@ public class CadFotos extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextFieldIdFoto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldCaminhoDaFoto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldDescricao = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jPanelImagemFoto = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jTableFotosMiniatura = new javax.swing.JTable();
+        jComboBoxMiniaturas = new javax.swing.JComboBox<>();
+        jButtonSelecioneAfoto = new javax.swing.JButton();
+        jTextFieldCaminhoDaFoto = new javax.swing.JTextField();
+        jPanelMostrarFoto = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaDescricao = new javax.swing.JTextArea();
+        jButtonSalvar = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
+        jButtonConsulta = new javax.swing.JButton();
+        jButtonNovo = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldQuantRegistros = new javax.swing.JTextField();
+        jButtonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Fotos de Miniaturas");
@@ -48,108 +103,189 @@ public class CadFotos extends javax.swing.JDialog {
 
         jLabel1.setText("Id:");
 
+        jTextFieldIdFoto.setEditable(false);
+
         jLabel2.setText("Caminho:");
 
         jLabel3.setText("Descrição:");
 
         jLabel4.setText("Miniatura:");
 
-        jButton1.setText("Selecionar fotos");
-
-        javax.swing.GroupLayout jPanelImagemFotoLayout = new javax.swing.GroupLayout(jPanelImagemFoto);
-        jPanelImagemFoto.setLayout(jPanelImagemFotoLayout);
-        jPanelImagemFotoLayout.setHorizontalGroup(
-            jPanelImagemFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelImagemFotoLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(jButton1)
-                .addContainerGap(128, Short.MAX_VALUE))
-        );
-        jPanelImagemFotoLayout.setVerticalGroup(
-            jPanelImagemFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagemFotoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(23, 23, 23))
-        );
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableFotosMiniatura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Miniatura", "Modelo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableFotosMiniatura);
+        if (jTableFotosMiniatura.getColumnModel().getColumnCount() > 0) {
+            jTableFotosMiniatura.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableFotosMiniatura.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableFotosMiniatura.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxMiniaturas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< Selecione a miniatura >" }));
+
+        jButtonSelecioneAfoto.setText("Selecionar fotos");
+        jButtonSelecioneAfoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelecioneAfotoActionPerformed(evt);
+            }
+        });
+
+        jPanelMostrarFoto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanelMostrarFotoLayout = new javax.swing.GroupLayout(jPanelMostrarFoto);
+        jPanelMostrarFoto.setLayout(jPanelMostrarFotoLayout);
+        jPanelMostrarFotoLayout.setHorizontalGroup(
+            jPanelMostrarFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 379, Short.MAX_VALUE)
+        );
+        jPanelMostrarFotoLayout.setVerticalGroup(
+            jPanelMostrarFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 224, Short.MAX_VALUE)
+        );
+
+        jTextAreaDescricao.setColumns(20);
+        jTextAreaDescricao.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaDescricao);
+
+        jButtonSalvar.setText("SALVAR");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
+
+        jButtonExcluir.setText("EXCLUIR");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
+
+        jButtonConsulta.setText("CONSULTA");
+        jButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultaActionPerformed(evt);
+            }
+        });
+
+        jButtonNovo.setText("NOVO");
+        jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNovoActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Quant. Registros:");
+
+        jTextFieldQuantRegistros.setEditable(false);
+
+        jButtonCancelar.setText("CANCELAR");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelCadFotosLayout = new javax.swing.GroupLayout(jPanelCadFotos);
         jPanelCadFotos.setLayout(jPanelCadFotosLayout);
         jPanelCadFotosLayout.setHorizontalGroup(
             jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFotosLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelCadFotosLayout.createSequentialGroup()
                         .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldCaminhoDaFoto)
-                                    .addComponent(jTextFieldDescricao)))
-                            .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                            .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jScrollPane2))
+                                .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                                    .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel4)
-                                        .addGap(23, 23, 23)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldIdFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                                        .addComponent(jLabel1))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jComboBoxMiniaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldIdFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFotosLayout.createSequentialGroup()
+                                .addComponent(jButtonSelecioneAfoto)
+                                .addGap(141, 141, 141))
+                            .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jPanelMostrarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelCadFotosLayout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldCaminhoDaFoto)))
+                                .addGap(15, 15, 15))))
                     .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanelImagemFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                        .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonNovo)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonConsulta)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonExcluir)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonSalvar))
+                            .addComponent(jScrollPane1))
                         .addGap(16, 16, 16))))
         );
         jPanelCadFotosLayout.setVerticalGroup(
             jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldIdFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldCaminhoDaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCadFotosLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextFieldIdFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFotosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonSelecioneAfoto)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelImagemFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 14, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jComboBoxMiniaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanelMostrarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldCaminhoDaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonSalvar)
+                    .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonExcluir)
+                        .addComponent(jButtonConsulta)
+                        .addComponent(jButtonNovo)
+                        .addComponent(jButtonCancelar)))
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,13 +298,39 @@ public class CadFotos extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelCadFotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanelCadFotos, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonSelecioneAfotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecioneAfotoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSelecioneAfotoActionPerformed
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonConsultaActionPerformed
+
+    private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonNovoActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        // TODO add your handling code here:
+        limpaCampos();
+       // this.dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,7 +343,7 @@ public class CadFotos extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -213,18 +375,26 @@ public class CadFotos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonConsulta;
+    private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonNovo;
+    private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JButton jButtonSelecioneAfoto;
+    private javax.swing.JComboBox<String> jComboBoxMiniaturas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanelCadFotos;
-    private javax.swing.JPanel jPanelImagemFoto;
+    private javax.swing.JPanel jPanelMostrarFoto;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableFotosMiniatura;
+    private javax.swing.JTextArea jTextAreaDescricao;
     private javax.swing.JTextField jTextFieldCaminhoDaFoto;
-    private javax.swing.JTextField jTextFieldDescricao;
     private javax.swing.JTextField jTextFieldIdFoto;
+    private javax.swing.JTextField jTextFieldQuantRegistros;
     // End of variables declaration//GEN-END:variables
 }

@@ -80,7 +80,7 @@ public class TemaDal {
     }
 
     public List<Temas> getAllTemas() throws Exception {
-        List<Temas> listTemas = new ArrayList<Temas>();
+        List<Temas> listTemas = new ArrayList<>();
         String sql = "SELECT * FROM temas";
         try {
             Statement statement = conexao.createStatement();

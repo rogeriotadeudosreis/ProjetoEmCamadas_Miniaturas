@@ -8,8 +8,6 @@ package app;
 import bll.FabricanteBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -18,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import jdk.nashorn.internal.runtime.regexp.joni.Option;
 import model.Fabricantes;
 
 /**
@@ -57,8 +54,8 @@ public class CadFabricantes extends javax.swing.JDialog {
     public CadFabricantes(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         criarTblFabricantes();
-        consultaFabricantes();
         initComponents();
+        consultaFabricantes();
 
     }
 
@@ -75,7 +72,7 @@ public class CadFabricantes extends javax.swing.JDialog {
     private void consultaFabricantes() throws Exception {
         modelo.setRowCount(0);
 
-        List<Fabricantes> listaFabricantes = new ArrayList<Fabricantes>();
+        List<Fabricantes> listaFabricantes = new ArrayList<>();
         listaFabricantes = fabricanteBll.getConsulta();
         
         //Chamado do método para ordenar a lista de fabricantes
@@ -85,6 +82,8 @@ public class CadFabricantes extends javax.swing.JDialog {
             modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
                 listaFabricantes.get(i).getNome().toUpperCase()});
         }
+        int registro = listaFabricantes.size();
+        jTextFieldQuantRegistros.setText(registro + "");
     }
     
     private void limpaCampos() {
@@ -112,6 +111,8 @@ public class CadFabricantes extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFabricantes = new javax.swing.JTable(modelo);
         jButtonConsultar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldQuantRegistros = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Fabricantes");
@@ -158,31 +159,40 @@ public class CadFabricantes extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Quant. de Registros:");
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addComponent(jButtonNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonConsultar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSalvar))
-                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldCodFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
+            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                .addComponent(jButtonNovo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonConsultar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExcluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSalvar))
+                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldCodFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelCadFabricantesLayout.setVerticalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,8 +210,12 @@ public class CadFabricantes extends javax.swing.JDialog {
                     .addComponent(jButtonNovo)
                     .addComponent(jButtonConsultar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,7 +229,7 @@ public class CadFabricantes extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelCadFabricantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -353,10 +367,12 @@ public class CadFabricantes extends javax.swing.JDialog {
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelCadFabricantes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableFabricantes;
     private javax.swing.JTextField jTextFieldCodFabricante;
     private javax.swing.JTextField jTextFieldNomeFabricante;
+    private javax.swing.JTextField jTextFieldQuantRegistros;
     // End of variables declaration//GEN-END:variables
 }

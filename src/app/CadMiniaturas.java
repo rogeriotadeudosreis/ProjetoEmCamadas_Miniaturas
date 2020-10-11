@@ -45,6 +45,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
 
         List<Fabricantes> listaFabricantes = new ArrayList<Fabricantes>();
         listaFabricantes = fabBll.getConsulta();
+        fabBll.ordenaListaFabricantes(listaFabricantes);
         for (int i = 0; i < listaFabricantes.size(); i++) {
             Fabricantes aux = listaFabricantes.get(i);
             jComboBoxFabricantes.addItem(aux.getId() + " - " + aux.getNome().toUpperCase());
@@ -52,6 +53,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
 
         List<TipoMiniaturas> listaTipoDeMiniaturas = new ArrayList<>();
         listaTipoDeMiniaturas = tipoBll.getConsulta();
+        tipoBll.ordenaListaDeTipoDeMiniaturas(listaTipoDeMiniaturas);
         for (int pos = 0; pos < listaTipoDeMiniaturas.size(); pos++) {
             TipoMiniaturas aux = listaTipoDeMiniaturas.get(pos);
             jComboBoxTiposDeMiniatura.addItem(aux.getId() + " - " + aux.getTipo().toUpperCase());
@@ -59,6 +61,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
 
         List<Temas> listaTemas = new ArrayList<>();
         listaTemas = temaBll.getConsulta();
+        temaBll.ordenaListaDeTemas(listaTemas);
         for (int pos = 0; pos < listaTemas.size(); pos++) {
             Temas aux = listaTemas.get(pos);
             jComboBoxTemas.addItem(aux.getId() + " - " + aux.getNome().toUpperCase());
@@ -88,7 +91,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
     private void consultarMiniaturas(List<Miniaturas> lista) throws Exception {
         DefaultTableModel model = (DefaultTableModel) jTableMiniaturas.getModel();
         model.setNumRows(0);
-        // colocar aqui nesta linha o método de ordenação
+        
+        miniBll.ordenaListaMiniaturas(lista);
+        
         for (int pos = 0; pos < lista.size(); pos++) {
             String[] linha = new String[10];
             Miniaturas aux = lista.get(pos);
@@ -104,6 +109,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
             linha[9] = aux.getTema().getNome().toUpperCase();
             model.addRow(linha);
         }
+        jTextFieldQuantRegistros.setText(lista.size() + "");
     }
 
     private void limpaCampos() {
@@ -183,6 +189,8 @@ public class CadMiniaturas extends javax.swing.JDialog {
         Excluir = new javax.swing.JButton();
         jButtonConsultar = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jTextFieldQuantRegistros = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Miniaturas");
@@ -279,6 +287,8 @@ public class CadMiniaturas extends javax.swing.JDialog {
             }
         });
 
+        jLabel11.setText("Quant. Registros:");
+
         javax.swing.GroupLayout jPanelMiniaturasLayout = new javax.swing.GroupLayout(jPanelMiniaturas);
         jPanelMiniaturas.setLayout(jPanelMiniaturasLayout);
         jPanelMiniaturasLayout.setHorizontalGroup(
@@ -338,7 +348,10 @@ public class CadMiniaturas extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldObservacoes))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonNovo)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonConsultar)
@@ -382,7 +395,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
                     .addComponent(jButtonSalvar)
                     .addComponent(Excluir)
                     .addComponent(jButtonConsultar)
-                    .addComponent(jButtonNovo))
+                    .addComponent(jButtonNovo)
+                    .addComponent(jLabel11)
+                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -544,6 +559,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxTiposDeMiniatura;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -561,6 +577,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldEscala;
     private javax.swing.JTextField jTextFieldModelo;
     private javax.swing.JTextField jTextFieldObservacoes;
+    private javax.swing.JTextField jTextFieldQuantRegistros;
     private javax.swing.JTextField jTextFieldValor;
     // End of variables declaration//GEN-END:variables
 }
