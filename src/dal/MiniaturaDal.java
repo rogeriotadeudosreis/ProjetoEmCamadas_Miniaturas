@@ -114,6 +114,7 @@ public class MiniaturaDal {
                 mini.setObservacoes_min(rs.getString("observacoes_min"));
                 mini.setEdicao_min(rs.getString("edicao_min"));
                 mini.setEscala_min(rs.getString("escala_min"));
+                mini.setValor_min(rs.getDouble("valor_min"));
                 FabricanteDal fab = FabricanteDal.getInstance();
                 mini.setFabricante(fab.getFabricanteById(rs.getInt("id_fab_min")));
                 Tipo_MiniaturaDal tipo = Tipo_MiniaturaDal.getInstance();
@@ -146,6 +147,7 @@ public class MiniaturaDal {
                 mini.setObservacoes_min(rs.getString("observacoes_min"));
                 mini.setEdicao_min(rs.getString("edicao_min"));
                 mini.setEscala_min(rs.getString("escala_min"));
+                mini.setValor_min(rs.getDouble("valor_min"));
                 FabricanteDal fab = FabricanteDal.getInstance();
                 mini.setFabricante(fab.getFabricanteById(rs.getInt("id_fab_min")));
                 Tipo_MiniaturaDal tipo = Tipo_MiniaturaDal.getInstance();
@@ -155,7 +157,7 @@ public class MiniaturaDal {
 
             }
         } catch (Exception erro) {
-            throw new Exception("Ocorreu um erro ao buscar este registro de fotos\n"
+            throw new Exception("Ocorreu um erro ao buscar este registro de miniaturas\n"
                     + erro.getMessage());
         }
         return mini;

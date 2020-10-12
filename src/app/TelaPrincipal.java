@@ -5,6 +5,8 @@
  */
 package app;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author roger
@@ -35,6 +37,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItemCadTemas = new javax.swing.JMenuItem();
         jMenuItemCadTipoDeMiniaturas = new javax.swing.JMenuItem();
         jMenuItemCadMiniaturas = new javax.swing.JMenuItem();
+        jMenuItemFotos = new javax.swing.JMenuItem();
         jMenuBarraSair = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
@@ -85,6 +88,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBarraCadastros.add(jMenuItemCadMiniaturas);
+
+        jMenuItemFotos.setText("FOTOS");
+        jMenuItemFotos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFotosActionPerformed(evt);
+            }
+        });
+        jMenuBarraCadastros.add(jMenuItemFotos);
 
         jMenuBar1.add(jMenuBarraCadastros);
 
@@ -162,6 +173,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemCadMiniaturasActionPerformed
 
+    private void jMenuItemFotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFotosActionPerformed
+        // TODO add your handling code here:
+        try {
+            
+            new CadFotos(this, true).setVisible(true);
+            this.setVisible(true);
+            
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItemFotosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,5 +230,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCadMiniaturas;
     private javax.swing.JMenuItem jMenuItemCadTemas;
     private javax.swing.JMenuItem jMenuItemCadTipoDeMiniaturas;
+    private javax.swing.JMenuItem jMenuItemFotos;
     // End of variables declaration//GEN-END:variables
 }

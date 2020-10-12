@@ -8,14 +8,12 @@ package app;
 import bll.TemaBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Temas;
 
@@ -60,12 +58,12 @@ public class CadTemas extends javax.swing.JDialog {
     }
 
     private void criarTblTemas() {
-        
+
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
 
         jTableTemas.setModel(modelo);
-        
+
         jTableTemas.getColumnModel().getColumn(0).setMinWidth(50);
         jTableTemas.getColumnModel().getColumn(0).setMaxWidth(50);
         jTableTemas.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -84,7 +82,8 @@ public class CadTemas extends javax.swing.JDialog {
             modelo.addRow(new Object[]{listaTemas.get(i).getId(),
                 listaTemas.get(i).getNome().toUpperCase()});
         }
-        jTextFieldQuantRegistros.setText(listaTemas.size() + "");
+        int registros = listaTemas.size();
+        jTextFieldQuantRegistros.setText(String.format("%02d", registros));
     }
 
     private void limpaCampos() {
@@ -162,6 +161,8 @@ public class CadTemas extends javax.swing.JDialog {
         });
 
         jLabel3.setText("Quant.Registros:");
+
+        jTextFieldQuantRegistros.setEditable(false);
 
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);

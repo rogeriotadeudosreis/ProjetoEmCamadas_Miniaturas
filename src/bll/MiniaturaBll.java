@@ -19,6 +19,7 @@ public class MiniaturaBll {
     }
     
     public void adicionar (Miniaturas objeto) throws Exception{
+        validaMiniatura(objeto);
         dal.addMiniatura(objeto);
     }
     
@@ -27,6 +28,7 @@ public class MiniaturaBll {
     }
     
     public void alterar(Miniaturas objeto) throws Exception{
+        validaMiniatura(objeto);
         dal.updateMiniatura(objeto);
     }
     
@@ -48,8 +50,23 @@ public class MiniaturaBll {
                 }
             }
         }
-        // retorna o array ordenado por nome
+       
     }
+     
+     public void validaMiniatura (Miniaturas objeto)throws Exception{
+         List<Miniaturas> lista = dal.getAllMiniaturas();
+         for (int pos = 0; pos < lista.size(); pos++) {
+             Miniaturas aux = lista.get(pos);
+             if (objeto.getModelo_min().equalsIgnoreCase(aux.getModelo_min().trim())) {
+                 throw new Exception("O modelo informado já existe nos registros de miniaturas");
+             }
+         }
+         if (objeto.getValor_min() < 0) {
+             throw new Exception("O valor da miniatura não pode ser menor que zero!");
+         }
+     }
+     
+     
     
     
     

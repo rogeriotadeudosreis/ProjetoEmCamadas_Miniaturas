@@ -32,7 +32,7 @@ public class FotoDal {
 
     public void addFoto(Fotos foto) throws Exception {
 
-        String sql = "INSERT INTO foto(caminho_fot, descricao_fot, "
+        String sql = "INSERT INTO fotos(caminho_fot, descricao_fot, "
                 + "id_min_fot) VALUES (?,?,?)";
         try {
 
@@ -50,7 +50,7 @@ public class FotoDal {
     }
 
     public void deleteFoto(int id) throws Exception {
-        String sql = "DELETE FROM foto WHERE id_fot=?";
+        String sql = "DELETE FROM fotos WHERE id_fot=?";
         try {
 
             PreparedStatement preparedStatement
@@ -66,7 +66,7 @@ public class FotoDal {
     }
 
     public void updateFoto(Fotos foto) throws Exception {
-        String sql = "UPDATE foto SET caminho_fot=?,"
+        String sql = "UPDATE fotos SET caminho_fot=?,"
                 + "descricao_fot=?, id_min_fot=? WHERE id_fot=?";
         try {
             PreparedStatement preparedStatement
@@ -99,6 +99,7 @@ public class FotoDal {
                 MiniaturaDal mini = MiniaturaDal.getInstance();
                 foto.setMiniatura(mini.getMiniaturaById(rs.getInt("id_min_fot")));
                 listaFotos.add(foto);
+                
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao consultar os registros de fotos\n"

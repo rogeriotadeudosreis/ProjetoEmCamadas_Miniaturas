@@ -8,7 +8,6 @@ package app;
 import bll.TipoMiniaturaBll;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -18,19 +17,17 @@ import model.TipoMiniaturas;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model.Fabricantes;
-import model.Temas;
 
 /**
  *
  * @author roger
  */
 public class CadTipoMiniaturas extends javax.swing.JDialog {
-    
+
     private DefaultTableModel modelo = new DefaultTableModel();
     private TipoMiniaturaBll tipoMinBll = new TipoMiniaturaBll();
-    private TipoMiniaturas tipoMin  = new TipoMiniaturas();
-    
+    private TipoMiniaturas tipoMin = new TipoMiniaturas();
+
     private static Date createNewDate(String data) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -56,21 +53,21 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
      */
     public CadTipoMiniaturas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
-        criarTblTipoMiniatura();
         initComponents();
+        criarTblTipoMiniatura();
         consultaTipoMiniatura();
-        
-        
+
     }
 
     private void criarTblTipoMiniatura() {
-        jTableTipoDeMiniatura = new JTable(modelo);
         modelo.addColumn("Código");
         modelo.addColumn("Tipo");
 
-        jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMinWidth(10);
-        jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMaxWidth(10);
-        jTableTipoDeMiniatura.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTableTipoDeMiniatura.setModel(modelo);
+        
+        jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMinWidth(60);
+        jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMaxWidth(60);
+        jTableTipoDeMiniatura.getColumnModel().getColumn(1).setPreferredWidth(200);
     }
 
     private void consultaTipoMiniatura() throws Exception {
@@ -78,24 +75,23 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
 
         List<TipoMiniaturas> listaTipoMiniaturas = new ArrayList<TipoMiniaturas>();
         listaTipoMiniaturas = tipoMinBll.getConsulta();
-        
+
         // Chamada do método para ordenar a lista de tipo de miniaturas
         tipoMinBll.ordenaListaDeTipoDeMiniaturas(listaTipoMiniaturas);
-        
+
         for (int i = 0; i < listaTipoMiniaturas.size(); i++) {
             modelo.addRow(new Object[]{listaTipoMiniaturas.get(i).getId(),
                 listaTipoMiniaturas.get(i).getTipo().toUpperCase()});
         }
-        jTextFieldQuantRegistros.setText(listaTipoMiniaturas.size() + "");
+        int registros = listaTipoMiniaturas.size();
+        jTextFieldQuantRegistros.setText(String.format("%02d", registros));
     }
-    
-    
 
     private void limpaCampos() {
         jTextFieldCodTipoMiniatura.setText("");
         jTextFieldNomeTipoMiniatura.setText("");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,6 +161,8 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
         });
 
         jLabel3.setText("Quant.Registros:");
+
+        jTextFieldQuantRegistros.setEditable(false);
 
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
@@ -241,26 +239,26 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
-        if(jTextFieldNomeTipoMiniatura.getText().isEmpty()){
+        if (jTextFieldNomeTipoMiniatura.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o nome do tipo de miniatura");
-        }else {
-        
-        try {
+        } else {
 
-            tipoMin.setTipo(jTextFieldNomeTipoMiniatura.getText());
+            try {
 
-            if (jButtonSalvar.getLabel().equals("SALVAR")) {
-                tipoMinBll.adicionarTipoDeMiniatura(tipoMin);
-            } else {
-                tipoMinBll.alterarTipoDeMiniatura(tipoMin);
+                tipoMin.setTipo(jTextFieldNomeTipoMiniatura.getText());
+
+                if (jButtonSalvar.getLabel().equals("SALVAR")) {
+                    tipoMinBll.adicionarTipoDeMiniatura(tipoMin);
+                } else {
+                    tipoMinBll.alterarTipoDeMiniatura(tipoMin);
+                }
+                consultaTipoMiniatura();
+
+                limpaCampos();
+
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
             }
-            consultaTipoMiniatura();
-
-            limpaCampos();
-
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
-        }
         }
         jTextFieldNomeTipoMiniatura.requestFocus();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
@@ -313,7 +311,7 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
         }
 
     }
-    
+
     /**
      * @param args the command line arguments
      */

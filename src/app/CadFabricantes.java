@@ -53,20 +53,20 @@ public class CadFabricantes extends javax.swing.JDialog {
      */
     public CadFabricantes(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
-        criarTblFabricantes();
         initComponents();
+        criarTblFabricantes();
         consultaFabricantes();
 
     }
 
     private void criarTblFabricantes() {
-        jTableFabricantes = new JTable(modelo);
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
+        jTableFabricantes.setModel(modelo);
 
-        jTableFabricantes.getColumnModel().getColumn(0).setMinWidth(10);
-        jTableFabricantes.getColumnModel().getColumn(0).setMaxWidth(10);
-        jTableFabricantes.getColumnModel().getColumn(1).setPreferredWidth(350);
+        jTableFabricantes.getColumnModel().getColumn(0).setMinWidth(60);
+        jTableFabricantes.getColumnModel().getColumn(0).setMaxWidth(60);
+        jTableFabricantes.getColumnModel().getColumn(1).setPreferredWidth(200);
     }
 
     private void consultaFabricantes() throws Exception {
@@ -83,7 +83,7 @@ public class CadFabricantes extends javax.swing.JDialog {
                 listaFabricantes.get(i).getNome().toUpperCase()});
         }
         int registro = listaFabricantes.size();
-        jTextFieldQuantRegistros.setText(registro + "");
+        jTextFieldQuantRegistros.setText(String.format("%02d", registro));
     }
     
     private void limpaCampos() {
@@ -160,6 +160,8 @@ public class CadFabricantes extends javax.swing.JDialog {
         });
 
         jLabel3.setText("Quant. de Registros:");
+
+        jTextFieldQuantRegistros.setEditable(false);
 
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);

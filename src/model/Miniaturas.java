@@ -145,4 +145,10 @@ public class Miniaturas {
         this.fotos = fotos;
     }
 
+    public void setSplitMiniaturas(String combBox) throws Exception {
+        String[] vetor = combBox.split(" - ");
+        this.id = Integer.parseInt(vetor[0]);
+        this.modelo_min = vetor[1];
+    }
+
 }
