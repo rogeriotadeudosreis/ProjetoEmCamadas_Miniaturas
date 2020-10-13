@@ -53,6 +53,7 @@ public class CadFabricantes extends javax.swing.JDialog {
     public CadFabricantes(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        jButtonExcluir.setEnabled(false);
 
         //consultaFabricantes();
     }
@@ -73,26 +74,27 @@ public class CadFabricantes extends javax.swing.JDialog {
 
     }
 
-    private void imprimirFabricante() throws Exception {
-        modelo.setRowCount(0);
-
-        List<Fabricantes> listaFabricantes = new ArrayList<>();
-        listaFabricantes = fabricanteBll.getConsulta();
-
-        //Chamado do método para ordenar a lista de fabricantes
-        fabricanteBll.ordenaListaFabricantes(listaFabricantes);
-
-        for (int i = 0; i < listaFabricantes.size(); i++) {
-            modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
-                listaFabricantes.get(i).getNome().toUpperCase()});
-        }
-        int registro = listaFabricantes.size();
-        jTextFieldQuantRegistros.setText(String.format("%02d", registro));
-    }
+//    private void imprimirFabricante() throws Exception {
+//        modelo.setRowCount(0);
+//
+//        List<Fabricantes> listaFabricantes = new ArrayList<>();
+//        listaFabricantes = fabricanteBll.getConsulta();
+//
+//        //Chamado do método para ordenar a lista de fabricantes
+//        fabricanteBll.ordenaListaFabricantes(listaFabricantes);
+//
+//        for (int i = 0; i < listaFabricantes.size(); i++) {
+//            modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
+//                listaFabricantes.get(i).getNome().toUpperCase()});
+//        }
+//        int registro = listaFabricantes.size();
+//        jTextFieldQuantRegistros.setText(String.format("%02d", registro));
+//    }
 
     private void limpaCampos() {
         jTextFieldCodFabricante.setText("");
         jTextFieldNomeFabricante.setText("");
+        jButtonExcluir.setEnabled(false);
     }
 
     /**
@@ -118,6 +120,7 @@ public class CadFabricantes extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCadFabricantes = new javax.swing.JTable();
         jButtonListar = new javax.swing.JButton();
+        jButtonFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Fabricantes");
@@ -187,6 +190,13 @@ public class CadFabricantes extends javax.swing.JDialog {
             }
         });
 
+        jButtonFechar.setText("FECHAR");
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
@@ -209,7 +219,8 @@ public class CadFabricantes extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonFechar))
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
@@ -242,11 +253,17 @@ public class CadFabricantes extends javax.swing.JDialog {
                     .addComponent(jButtonListar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29))
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonFechar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -298,8 +315,8 @@ public class CadFabricantes extends javax.swing.JDialog {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             fabricanteBll.remover(fabricanteBll.getConsultaPorId(fabricante.getId()));
-            imprimirFabricante();
-
+            imprimirDadosFabricantes(fabricanteBll.getConsulta());
+            limpaCampos();
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -325,6 +342,7 @@ public class CadFabricantes extends javax.swing.JDialog {
             int linha = jTableCadFabricantes.getSelectedRow();
             Integer codigo = Integer.parseInt(jTableCadFabricantes.getValueAt(linha, 0).toString());
             preencherCampos((int) codigo);
+            jButtonExcluir.setEnabled(true);
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
@@ -339,6 +357,11 @@ public class CadFabricantes extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
         }
     }//GEN-LAST:event_jButtonListarActionPerformed
+
+    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonFecharActionPerformed
 
     private void preencherCampos(int id) {
 
@@ -409,6 +432,7 @@ public class CadFabricantes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;

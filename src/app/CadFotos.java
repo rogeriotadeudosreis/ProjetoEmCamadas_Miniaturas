@@ -37,9 +37,10 @@ public class CadFotos extends javax.swing.JDialog {
     public CadFotos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jButtonExcluir.setEnabled(false);
 
         try {
-           // consultarFotos(fotoBll.getConsultar());
+            // consultarFotos(fotoBll.getConsultar());
 
             jTextAreaDescricao.setLineWrap(true);
             miniBll = new MiniaturaBll();
@@ -79,6 +80,7 @@ public class CadFotos extends javax.swing.JDialog {
     }
 
     private void consultarFotos(List<Fotos> lista) throws Exception {
+        jTextFieldQuantRegistros.setText(lista.size() + "");
         DefaultTableModel model = (DefaultTableModel) jTableFotosMiniatura.getModel();
         model.setNumRows(0);
 
@@ -92,19 +94,22 @@ public class CadFotos extends javax.swing.JDialog {
             linha[2] = aux.getDescricao().toUpperCase();
             model.addRow(linha);
         }
-       
-        jTextFieldQuantRegistros.setText(lista.size() + "");
-
     }
 
     public void limpaCampos() {
-
+//        DefaultTableModel model = (DefaultTableModel) jTableFotosMiniatura.getModel();
+//        model.setRowCount(0);
+        
         jTextFieldIdFoto.setText("");
         jComboBoxMiniaturas.setSelectedIndex(0);
         jTextAreaDescricao.setText("");
         jTextFieldQuantRegistros.setText("");
         jTextFieldCaminhoDaFoto.setText("");
         jLabelExibirFoto.setIcon(null);
+        
+        jButtonExcluir.setEnabled(false);
+        
+        
     }
 
     public void preencherCampos(int id) throws Exception {
@@ -570,6 +575,7 @@ public class CadFotos extends javax.swing.JDialog {
     private void jTableFotosMiniaturaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFotosMiniaturaMouseReleased
         // TODO add your handling code here:
         try {
+            jButtonExcluir.setEnabled(true);
             int linha = jTableFotosMiniatura.getSelectedRow();
             Integer codigo = Integer.parseInt(jTableFotosMiniatura.getValueAt(linha, 0).toString());
             preencherCampos((int) codigo);
@@ -582,7 +588,7 @@ public class CadFotos extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             new ListaDeMiniaturasView(null, true).setVisible(true);
-            
+
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção!!!" + erro.getMessage());
         }

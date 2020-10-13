@@ -146,7 +146,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jButtonNovo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Excluir" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonExcluir" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButtonSalvar" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -199,7 +199,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonNovo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonConsultar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Excluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldPesquisarMiniatura" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonCadFotos" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -432,12 +432,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSalvarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="Excluir">
+        <Component class="javax.swing.JButton" name="jButtonExcluir">
           <Properties>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExcluirActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExcluirActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonConsultar">
@@ -495,7 +495,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&lt; Digite aqui um dado da miniatura &gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonCadFotos">

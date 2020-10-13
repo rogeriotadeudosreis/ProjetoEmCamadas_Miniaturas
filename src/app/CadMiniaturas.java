@@ -36,6 +36,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
     public CadMiniaturas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        jButtonExcluir.setEnabled(false);
         //consultarMiniaturas(miniBll.getConsultar());
 
         List<Fabricantes> listaFabricantes = new ArrayList<Fabricantes>();
@@ -125,6 +126,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
         jComboBoxFabricantes.setSelectedIndex(0);
         jComboBoxTiposDeMiniatura.setSelectedIndex(0);
         jComboBoxTemas.setSelectedIndex(0);
+        
+        jButtonExcluir.setEnabled(false);
+        jTextFieldPesquisarMiniatura.setText("");
     }
 
     private void preencheCampos(int id) {
@@ -188,7 +192,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMiniaturas = new javax.swing.JTable();
         jButtonSalvar = new javax.swing.JButton();
-        Excluir = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
         jButtonConsultar = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -272,10 +276,10 @@ public class CadMiniaturas extends javax.swing.JDialog {
             }
         });
 
-        Excluir.setText("EXCLUIR");
-        Excluir.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExcluir.setText("EXCLUIR");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExcluirActionPerformed(evt);
+                jButtonExcluirActionPerformed(evt);
             }
         });
 
@@ -319,7 +323,6 @@ public class CadMiniaturas extends javax.swing.JDialog {
         });
 
         jTextFieldPesquisarMiniatura.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldPesquisarMiniatura.setText("< Digite aqui um dado da miniatura >");
 
         jButtonCadFotos.setText("CADASTRO DE FOTOS");
         jButtonCadFotos.addActionListener(new java.awt.event.ActionListener() {
@@ -414,7 +417,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
                                 .addComponent(jButtonNovo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Excluir)
+                                .addComponent(jButtonExcluir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonSalvar)))))
                 .addContainerGap())
@@ -457,7 +460,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
                 .addGroup(jPanelMiniaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNovo)
                     .addComponent(jButtonConsultar)
-                    .addComponent(Excluir)
+                    .addComponent(jButtonExcluir)
                     .addComponent(jButtonSalvar)
                     .addComponent(jTextFieldPesquisarMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCadFotos))
@@ -561,7 +564,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
         return false;
     }
 
-    private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
 
             miniBll.deletar(mini.getId());
@@ -570,7 +573,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
         }
-    }//GEN-LAST:event_ExcluirActionPerformed
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
         try {
@@ -596,6 +599,7 @@ public class CadMiniaturas extends javax.swing.JDialog {
             int linha = jTableMiniaturas.getSelectedRow();
             Integer codigo = Integer.parseInt(jTableMiniaturas.getValueAt(linha, 0).toString());
             preencheCampos((int) codigo);
+            jButtonExcluir.setEnabled(true);
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção\n " + erro.getMessage());
@@ -724,9 +728,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Excluir;
     private javax.swing.JButton jButtonCadFotos;
     private javax.swing.JButton jButtonConsultar;
+    private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonManutencaoFabricante;
     private javax.swing.JButton jButtonManutencaoTemas;

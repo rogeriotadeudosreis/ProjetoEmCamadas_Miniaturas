@@ -66,7 +66,7 @@ public class ListaDeMiniaturasView extends javax.swing.JDialog {
                 // código para redimencionar a imagem
                 ImageIcon imageIcon = new ImageIcon(foto.getPath());
                 Image image = imageIcon.getImage();
-                Image newimg = image.getScaledInstance(380, 290, java.awt.Image.SCALE_SMOOTH);
+                Image newimg = image.getScaledInstance(350, 260, java.awt.Image.SCALE_SMOOTH);
                 
                 ImageIcon icon = new ImageIcon(newimg);
                 jLabelExibirFoto.setText("");

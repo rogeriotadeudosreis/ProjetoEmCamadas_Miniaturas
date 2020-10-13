@@ -69,7 +69,7 @@ public class MiniaturaBll {
             throw new Exception("O valor da miniatura não pode ser menor que zero!");
         }
         Date data = new Date();
-        if (objeto.getAno_min() < 1200 || objeto.getAno_min() > data.getTime()) {
+        if (objeto.getAno_min() < 1200 || objeto.getAno_min() > 2020) {
             throw new Exception("Ano de miniatura inválido\nVerifique\n");
         }
     }

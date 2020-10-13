@@ -7,7 +7,6 @@ package app;
 
 import bll.TemaBll;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,6 +52,7 @@ public class CadTemas extends javax.swing.JDialog {
     public CadTemas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        jButtonExcluir.setEnabled(false);
     }
 
    private void imprimirDadosTemas(List<Temas> listaTemas)throws Exception{
@@ -72,6 +72,7 @@ public class CadTemas extends javax.swing.JDialog {
     private void limpaCampos() {
         jTextFieldCodTema.setText("");
         jTextFieldNomeTema.setText("");
+        jButtonExcluir.setEnabled(false);
 
     }
 
@@ -98,6 +99,7 @@ public class CadTemas extends javax.swing.JDialog {
         jButtonListar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCadTemas = new javax.swing.JTable();
+        jButtonFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Temas de Miniaturas");
@@ -167,6 +169,13 @@ public class CadTemas extends javax.swing.JDialog {
             jTableCadTemas.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
+        jButtonFechar.setText("FECHAR");
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
@@ -176,8 +185,8 @@ public class CadTemas extends javax.swing.JDialog {
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2))
-                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                             .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                                     .addGap(44, 44, 44)
@@ -199,11 +208,13 @@ public class CadTemas extends javax.swing.JDialog {
                                     .addComponent(jButtonExcluir)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButtonSalvar)))
-                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonFechar))))
                 .addContainerGap())
         );
         jPanelCadFabricantesLayout.setVerticalGroup(
@@ -224,11 +235,12 @@ public class CadTemas extends javax.swing.JDialog {
                     .addComponent(jButtonListar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonFechar))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -281,6 +293,7 @@ public class CadTemas extends javax.swing.JDialog {
         try {
             temaBll.remover(temaBll.getConsultaPorId(tema.getId()));
             imprimirDadosTemas(temaBll.getConsulta());
+            limpaCampos();
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
@@ -307,6 +320,7 @@ public class CadTemas extends javax.swing.JDialog {
             int linha = jTableCadTemas.getSelectedRow();
             Integer codigo = Integer.parseInt(jTableCadTemas.getValueAt(linha, 0).toString());
             preencherCampos((int)codigo);
+            jButtonExcluir.setEnabled(true);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
         }
@@ -320,6 +334,11 @@ public class CadTemas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
         }
     }//GEN-LAST:event_jButtonListarActionPerformed
+
+    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonFecharActionPerformed
 
     private void preencherCampos(int id) {
         try {
@@ -387,6 +406,7 @@ public class CadTemas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
