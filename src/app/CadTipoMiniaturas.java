@@ -54,37 +54,21 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
     public CadTipoMiniaturas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
-        criarTblTipoMiniatura();
-        consultaTipoMiniatura();
 
     }
-
-    private void criarTblTipoMiniatura() {
-        modelo.addColumn("Código");
-        modelo.addColumn("Tipo");
-
-        jTableTipoDeMiniatura.setModel(modelo);
-        
-        jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMinWidth(60);
-        jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMaxWidth(60);
-        jTableTipoDeMiniatura.getColumnModel().getColumn(1).setPreferredWidth(200);
-    }
-
-    private void consultaTipoMiniatura() throws Exception {
-        modelo.setRowCount(0);
-
-        List<TipoMiniaturas> listaTipoMiniaturas = new ArrayList<TipoMiniaturas>();
-        listaTipoMiniaturas = tipoMinBll.getConsulta();
-
-        // Chamada do método para ordenar a lista de tipo de miniaturas
-        tipoMinBll.ordenaListaDeTipoDeMiniaturas(listaTipoMiniaturas);
-
-        for (int i = 0; i < listaTipoMiniaturas.size(); i++) {
-            modelo.addRow(new Object[]{listaTipoMiniaturas.get(i).getId(),
-                listaTipoMiniaturas.get(i).getTipo().toUpperCase()});
+    
+    private void imprimirTipoDeMiniaturas(List<TipoMiniaturas> listaTipoMini)throws Exception{
+        DefaultTableModel model = (DefaultTableModel) jTableTipoDeMiniatura.getModel();
+        model.setNumRows(0);
+        tipoMinBll.ordenaListaDeTipoDeMiniaturas(listaTipoMini);
+        for (int pos = 0; pos < listaTipoMini.size(); pos++) {
+            String [] linha = new String[2];
+            TipoMiniaturas aux = listaTipoMini.get(pos);
+            linha[0] = aux.getId() + "";
+            linha[1] = aux.getTipo().toUpperCase();
+            model.addRow(linha);;
         }
-        int registros = listaTipoMiniaturas.size();
-        jTextFieldQuantRegistros.setText(String.format("%02d", registros));
+        jTextFieldQuantRegistros.setText(listaTipoMini.size() + "");
     }
 
     private void limpaCampos() {
@@ -109,11 +93,12 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
         jTextFieldNomeTipoMiniatura = new javax.swing.JTextField();
         jButtonExcluir = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTipoDeMiniatura = new javax.swing.JTable(modelo);
         jButtonConsultar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldQuantRegistros = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableTipoDeMiniatura = new javax.swing.JTable();
+        jButtonListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Tipo de Miniaturas");
@@ -145,14 +130,6 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
             }
         });
 
-        jTableTipoDeMiniatura.setModel(modelo);
-        jTableTipoDeMiniatura.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableTipoDeMiniaturaMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableTipoDeMiniatura);
-
         jButtonConsultar.setText("CONSULTAR");
         jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,35 +141,71 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
 
         jTextFieldQuantRegistros.setEditable(false);
 
+        jTableTipoDeMiniatura.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Descrição"
+            }
+        ));
+        jTableTipoDeMiniatura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableTipoDeMiniaturaMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableTipoDeMiniatura);
+        if (jTableTipoDeMiniatura.getColumnModel().getColumnCount() > 0) {
+            jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableTipoDeMiniatura.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableTipoDeMiniatura.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jButtonListar.setText("LISTAR");
+        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldCodTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNomeTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonConsultar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSalvar)))
+                        .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldCodTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldNomeTipoMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                .addComponent(jButtonNovo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonListar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonConsultar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExcluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSalvar)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2)))
+                .addContainerGap())
+            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
         );
         jPanelCadFabricantesLayout.setVerticalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,11 +222,14 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonNovo)
                     .addComponent(jButtonConsultar)
+                    .addComponent(jButtonListar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,8 +268,7 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
                 } else {
                     tipoMinBll.alterarTipoDeMiniatura(tipoMin);
                 }
-                consultaTipoMiniatura();
-
+                imprimirTipoDeMiniaturas(tipoMinBll.getConsulta());
                 limpaCampos();
 
             } catch (Exception erro) {
@@ -266,7 +281,7 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             tipoMinBll.removerTipoDeMiniaturas(tipoMinBll.getConsultaPorId(tipoMin.getId()));
-            consultaTipoMiniatura();
+            imprimirTipoDeMiniaturas(tipoMinBll.getConsulta());
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
@@ -279,19 +294,35 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
         jButtonSalvar.setLabel("SALVAR");
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
-    private void jTableTipoDeMiniaturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTipoDeMiniaturaMouseClicked
-        int linha = jTableTipoDeMiniatura.getSelectedRow();
-        Integer codigo = (Integer) jTableTipoDeMiniatura.getValueAt(linha, 0);
-        preencherCampos((int) codigo);
-    }//GEN-LAST:event_jTableTipoDeMiniaturaMouseClicked
-
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
         try {
-            consultaTipoMiniatura();
+            imprimirTipoDeMiniaturas(tipoMinBll.pesquisarTipoDeMiniatura(jTextFieldNomeTipoMiniatura.getText()));
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonConsultarActionPerformed
+
+    private void jTableTipoDeMiniaturaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTipoDeMiniaturaMouseReleased
+        // TODO add your handling code here:
+        try {
+            int linha = jTableTipoDeMiniatura.getSelectedRow();
+            Integer codigo = Integer.parseInt(jTableTipoDeMiniatura.getValueAt(linha, 0).toString());
+            preencherCampos((int)codigo);
+            
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
+                   
+        }
+    }//GEN-LAST:event_jTableTipoDeMiniaturaMouseReleased
+
+    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
+        // TODO add your handling code here:
+        try {
+            imprimirTipoDeMiniaturas(tipoMinBll.getConsulta());
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void preencherCampos(int id) {
 
@@ -363,13 +394,14 @@ public class CadTipoMiniaturas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelCadFabricantes;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableTipoDeMiniatura;
     private javax.swing.JTextField jTextFieldCodTipoMiniatura;
     private javax.swing.JTextField jTextFieldNomeTipoMiniatura;

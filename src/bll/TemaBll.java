@@ -1,6 +1,7 @@
 package bll;
 
 import dal.TemaDal;
+import java.util.ArrayList;
 import java.util.List;
 import model.Fabricantes;
 import model.Temas;
@@ -75,5 +76,9 @@ public class TemaBll {
         }
         // retorna o array ordenado por nome
     }
+    
+     public ArrayList pesquisarTemas(String dados) throws Exception{
+         return this.dal.pesquisarTemas(dados);
+     }
 
 }

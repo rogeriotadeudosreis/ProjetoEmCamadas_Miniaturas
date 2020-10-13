@@ -39,7 +39,7 @@ public class CadFotos extends javax.swing.JDialog {
         initComponents();
 
         try {
-            consultarFotos(fotoBll.getConsultar());
+           // consultarFotos(fotoBll.getConsultar());
 
             jTextAreaDescricao.setLineWrap(true);
             miniBll = new MiniaturaBll();
@@ -92,11 +92,8 @@ public class CadFotos extends javax.swing.JDialog {
             linha[2] = aux.getDescricao().toUpperCase();
             model.addRow(linha);
         }
-        int registros = lista.size();
-        if (registros == 0) {
-            JOptionPane.showMessageDialog(null, "Lista vazia!");
-        }
-        jTextFieldQuantRegistros.setText(String.format("%02d", registros));
+       
+        jTextFieldQuantRegistros.setText(lista.size() + "");
 
     }
 
@@ -115,11 +112,20 @@ public class CadFotos extends javax.swing.JDialog {
 
             if (id > 0) {
                 foto = fotoBll.consultarPorId(id);
+                jTextFieldIdFoto.setText(id + "");
                 String mini = String.format("%02d", foto.getMiniatura().getId()) + " - "
                         + foto.getMiniatura().getModelo_min().toUpperCase();
                 jComboBoxMiniaturas.setSelectedItem(mini);
                 jTextAreaDescricao.setText(foto.getDescricao());
                 jTextFieldCaminhoDaFoto.setText(foto.getPath());
+
+                ImageIcon imageIcon = new ImageIcon(foto.getPath());
+                Image image = imageIcon.getImage();
+                Image newimg = image.getScaledInstance(380, 290, java.awt.Image.SCALE_SMOOTH);
+                // Fim do código para redimensionar a foto
+                ImageIcon icon = new ImageIcon(newimg);
+                jLabelExibirFoto.setText("");
+                jLabelExibirFoto.setIcon(icon);
 
                 jButtonSalvar.setLabel("EDITAR");
             } else {
@@ -163,7 +169,7 @@ public class CadFotos extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldQuantRegistros = new javax.swing.JTextField();
         jButtonCancelar = new javax.swing.JButton();
-        jButtonNovaMiniatura = new javax.swing.JButton();
+        jButtonManutencaoDeMiniatura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Fotos de Miniaturas");
@@ -187,6 +193,11 @@ public class CadFotos extends javax.swing.JDialog {
                 "Id", "Miniatura / Modelo", "Descrição da Miniatura"
             }
         ));
+        jTableFotosMiniatura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableFotosMiniaturaMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableFotosMiniatura);
         if (jTableFotosMiniatura.getColumnModel().getColumnCount() > 0) {
             jTableFotosMiniatura.getColumnModel().getColumn(0).setMinWidth(50);
@@ -272,10 +283,10 @@ public class CadFotos extends javax.swing.JDialog {
             }
         });
 
-        jButtonNovaMiniatura.setText("Manutençlão de Miniatura");
-        jButtonNovaMiniatura.addActionListener(new java.awt.event.ActionListener() {
+        jButtonManutencaoDeMiniatura.setText("Manutenção de Miniatura");
+        jButtonManutencaoDeMiniatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNovaMiniaturaActionPerformed(evt);
+                jButtonManutencaoDeMiniaturaActionPerformed(evt);
             }
         });
 
@@ -325,7 +336,7 @@ public class CadFotos extends javax.swing.JDialog {
                                 .addComponent(jLabel3)
                                 .addGap(171, 171, 171))
                             .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                                .addComponent(jButtonNovaMiniatura)
+                                .addComponent(jButtonManutencaoDeMiniatura)
                                 .addGap(108, 108, 108)))
                         .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFotosLayout.createSequentialGroup()
@@ -354,7 +365,7 @@ public class CadFotos extends javax.swing.JDialog {
                             .addComponent(jLabel4)
                             .addComponent(jComboBoxMiniaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
-                        .addComponent(jButtonNovaMiniatura)
+                        .addComponent(jButtonManutencaoDeMiniatura)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -404,8 +415,8 @@ public class CadFotos extends javax.swing.JDialog {
             // Criar estrutura para buscar a foto em meu computador 
             chooser.showOpenDialog(null);
             f = chooser.getSelectedFile();
-            String foto = f.getAbsolutePath();
-            jTextFieldCaminhoDaFoto.setText(foto);
+            String caminho = f.getAbsolutePath();
+            jTextFieldCaminhoDaFoto.setText(caminho);
 
             // Código para definir o tamanho da imagem
             ImageIcon imageIcon = new ImageIcon(f.getPath());
@@ -418,7 +429,7 @@ public class CadFotos extends javax.swing.JDialog {
             jLabelExibirFoto.setIcon(icon);
 
         } catch (RuntimeException erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage());
+            JOptionPane.showMessageDialog(null, "Atenção ao botão selecionar fotos\n" + erro.getMessage());
         }
 
         JFileChooser jfc
@@ -436,42 +447,69 @@ public class CadFotos extends javax.swing.JDialog {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
-        try {
 
-            Miniaturas auxMini = new Miniaturas();
-            auxMini.setSplitMiniaturas(jComboBoxMiniaturas.getSelectedItem().toString());
-            foto.setMiniatura(auxMini);
+        if (jComboBoxMiniaturas.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione a miniatura\n");
+            jComboBoxMiniaturas.requestFocus();
+        } else if (jTextAreaDescricao.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Insira uma descrição da miniatura\n");
+            jTextAreaDescricao.requestFocus();
+        } else if (jTextFieldCaminhoDaFoto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione uma foto para a miniatura\n");
+            jButtonSelecioneAfoto.requestFocus();
+        } else {
 
-            foto.setDescricao(jTextAreaDescricao.getText());
-            foto.setPath(jTextFieldCaminhoDaFoto.getText());
+            try {
 
-            if (jButtonSalvar.getLabel().equalsIgnoreCase("SALVAR")) {
-                fotoBll.adicionar(foto);
-            } else {
-                fotoBll.alterar(foto);
+                Miniaturas auxMini = new Miniaturas();
+                auxMini.setSplitMiniaturas(jComboBoxMiniaturas.getSelectedItem().toString());
+                foto.setMiniatura(auxMini);
+
+                foto.setDescricao(jTextAreaDescricao.getText());
+                foto.setPath(jTextFieldCaminhoDaFoto.getText());
+
+                if (jButtonSalvar.getLabel().equalsIgnoreCase("SALVAR")) {
+                    fotoBll.adicionar(foto);
+                } else {
+                    fotoBll.alterar(foto);
+                }
+                consultarFotos(fotoBll.getConsultar());
+                limpaCampos();
+
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro.getMessage());
             }
-            System.out.println(foto.toString());
-            consultarFotos(fotoBll.getConsultar());
-            limpaCampos();
-
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage());
         }
-
 
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         // TODO add your handling code here:
-        
+        try {
+
+            fotoBll.remover(foto.getId());
+            consultarFotos(fotoBll.getConsultar());
+            limpaCampos();
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
+        }
+
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultaActionPerformed
         // TODO add your handling code here:
+        try {
+            consultarFotos(fotoBll.getConsultar());
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
+        }
     }//GEN-LAST:event_jButtonConsultaActionPerformed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
         // TODO add your handling code here:
+        jButtonSalvar.setLabel("SALVAR");
+        limpaCampos();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -480,7 +518,7 @@ public class CadFotos extends javax.swing.JDialog {
         // this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jButtonNovaMiniaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovaMiniaturaActionPerformed
+    private void jButtonManutencaoDeMiniaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonManutencaoDeMiniaturaActionPerformed
         // TODO add your handling code here:
         try {
             new CadMiniaturas(null, true).setVisible(true);
@@ -499,13 +537,22 @@ public class CadFotos extends javax.swing.JDialog {
                     + "cadastro de miniaturas " + erro.getMessage());
         }
 
-    }//GEN-LAST:event_jButtonNovaMiniaturaActionPerformed
+    }//GEN-LAST:event_jButtonManutencaoDeMiniaturaActionPerformed
 
     private void jComboBoxMiniaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxMiniaturasMouseClicked
-        // TODO add your handling code here:
-
-
+        // TODO add your handling code here:      
     }//GEN-LAST:event_jComboBoxMiniaturasMouseClicked
+
+    private void jTableFotosMiniaturaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFotosMiniaturaMouseReleased
+        // TODO add your handling code here:
+        try {
+            int linha = jTableFotosMiniatura.getSelectedRow();
+            Integer codigo = Integer.parseInt(jTableFotosMiniatura.getValueAt(linha, 0).toString());
+            preencherCampos((int) codigo);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jTableFotosMiniaturaMouseReleased
 
     /**
      * @param args the command line arguments
@@ -553,7 +600,7 @@ public class CadFotos extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonConsulta;
     private javax.swing.JButton jButtonExcluir;
-    private javax.swing.JButton jButtonNovaMiniatura;
+    private javax.swing.JButton jButtonManutencaoDeMiniatura;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonSelecioneAfoto;

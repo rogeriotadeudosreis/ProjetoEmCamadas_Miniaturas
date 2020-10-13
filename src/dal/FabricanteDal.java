@@ -97,7 +97,7 @@ public class FabricanteDal {
                 fabricante.setNome(rs.getString("nome_fab"));
 
                 listFabricantes.add(fabricante);
-                
+
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao consultar os registros de fabricantes\n"
@@ -123,5 +123,22 @@ public class FabricanteDal {
                     + erro.getMessage());
         }
         return fabricante;
+    }
+
+    public ArrayList pesquisarFbricante(String dados) throws Exception {
+        String textoDigitado = dados;
+        ArrayList<Fabricantes> resultadoDaPesquisa = new ArrayList<>();
+        boolean vdd = true;
+        for (Fabricantes fabricante : getAllFabricantes()) {
+            if (fabricante.getNome().toLowerCase().trim().contains(textoDigitado)) {
+                resultadoDaPesquisa.add(fabricante);
+                vdd = false;
+            }
+
+        }
+        if (vdd) {
+            throw new Exception("Registro não encontrado!\n");
+        }
+        return resultadoDaPesquisa;
     }
 }

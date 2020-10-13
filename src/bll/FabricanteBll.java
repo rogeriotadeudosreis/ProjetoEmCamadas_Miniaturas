@@ -40,8 +40,8 @@ public class FabricanteBll {
     public Fabricantes getConsultaPorId(int id) throws Exception {
         return dal.getFabricanteById(id);
     }
-    
-    public void validaFabricante(Fabricantes objeto)throws Exception{
+
+    public void validaFabricante(Fabricantes objeto) throws Exception {
         String nome = objeto.getNome().trim().toLowerCase();
         String invalidos = "'\"!@#$%¨&*()+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
@@ -52,7 +52,7 @@ public class FabricanteBll {
         if (nome.equals("")) {
             throw new Exception("Informe o nome do fabricante");
         }
-        
+
         List<Fabricantes> lista = dal.getAllFabricantes();
         for (int pos = 0; pos < lista.size(); pos++) {
             Fabricantes aux = lista.get(pos);
@@ -60,9 +60,9 @@ public class FabricanteBll {
                 throw new Exception("O nome informado já existe!\n");
             }
         }
-   }
-    
-     public void ordenaListaFabricantes(List<Fabricantes> lista) throws Exception {
+    }
+
+    public void ordenaListaFabricantes(List<Fabricantes> lista) throws Exception {
         for (int i = 0; i < lista.size(); i++) {
             for (int j = i; j < lista.size(); j++) {
                 if (lista.get(i).getNome().compareToIgnoreCase(lista.get(j).getNome()) >= 0) {
@@ -74,6 +74,9 @@ public class FabricanteBll {
         }
         // retorna o array ordenado por nome
     }
-    
-  
+
+    public ArrayList pesquisarFbricante(String dados) throws Exception {
+        return dal.pesquisarFbricante(dados);
+    }
+
 }

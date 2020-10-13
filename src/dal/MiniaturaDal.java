@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import model.Fabricantes;
 import model.Miniaturas;
 import util.Conexao;
 
@@ -18,7 +19,7 @@ public class MiniaturaDal {
 
     private static MiniaturaDal instance = null;
     private Connection conexao;
-    
+
     private MiniaturaDal() {
         conexao = Conexao.getConexao();
     }
@@ -29,7 +30,7 @@ public class MiniaturaDal {
         }
         return instance;
     }
-    
+
     public void addMiniatura(Miniaturas miniatura) throws Exception {
 
         String sql = "INSERT INTO miniaturas(modelo_min, ano_min, observacoes_min,"
@@ -161,6 +162,25 @@ public class MiniaturaDal {
                     + erro.getMessage());
         }
         return mini;
+    }
+
+    public ArrayList pesquisarMiniatura(String dados) throws Exception {
+        String textoDigitado = dados;
+        ArrayList<Miniaturas> resultadoDaPesquisa = new ArrayList<>();
+        boolean vdd = false;
+        for (Miniaturas mini : getAllMiniaturas()) {
+            if (mini.getModelo_min().toLowerCase().trim().contains(textoDigitado)
+                    || mini.getObservacoes_min().toLowerCase().trim().contains(textoDigitado)
+                    || (mini.getEdicao_min().toLowerCase().trim().contains(textoDigitado)
+                    || (mini.getEscala_min().toLowerCase().trim().contains(textoDigitado)))) {
+                resultadoDaPesquisa.add(mini);
+                vdd = true;
+            }
+        }
+        if (!vdd) {
+            throw new Exception("Registro não encontrado!\n");
+        }
+        return resultadoDaPesquisa;
     }
 
 }

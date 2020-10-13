@@ -1,6 +1,7 @@
 package bll;
 
 import dal.Tipo_MiniaturaDal;
+import java.util.ArrayList;
 import java.util.List;
 import model.Temas;
 import model.TipoMiniaturas;
@@ -10,38 +11,39 @@ import model.TipoMiniaturas;
  * @author roger
  */
 public class TipoMiniaturaBll {
+
     //
     private static final long serialVersionUID = 1L;
     private Tipo_MiniaturaDal dal;
-    
-    public TipoMiniaturaBll(){
+
+    public TipoMiniaturaBll() {
         super();
         dal = Tipo_MiniaturaDal.getInstance();
     }
-    
-    public void adicionarTipoDeMiniatura (TipoMiniaturas tipo) throws Exception{
+
+    public void adicionarTipoDeMiniatura(TipoMiniaturas tipo) throws Exception {
         validaTipo(tipo);
         dal.addTipoMiniaturas(tipo);
     }
-    
-    public void alterarTipoDeMiniatura (TipoMiniaturas tipo)throws Exception{
+
+    public void alterarTipoDeMiniatura(TipoMiniaturas tipo) throws Exception {
         validaTipo(tipo);
         dal.updateTipoMiniaturas(tipo);
     }
-    
-    public void removerTipoDeMiniaturas(TipoMiniaturas tipo)throws Exception{
+
+    public void removerTipoDeMiniaturas(TipoMiniaturas tipo) throws Exception {
         dal.deleteTipoMiniaturas(tipo.getId());
     }
-    
+
     public List<TipoMiniaturas> getConsulta() throws Exception {
         return dal.getAllTipoMiniaturas();
     }
-    
-    public TipoMiniaturas getConsultaPorId (int id)throws Exception{
+
+    public TipoMiniaturas getConsultaPorId(int id) throws Exception {
         return dal.getTipoMinById(id);
     }
-    
-    public void validaTipo(TipoMiniaturas objeto)throws Exception{
+
+    public void validaTipo(TipoMiniaturas objeto) throws Exception {
         String tipo = objeto.getTipo().trim().toLowerCase();
         String invalidos = "1234567890'\"!@#$%¨&*()+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
@@ -52,7 +54,7 @@ public class TipoMiniaturaBll {
         if (tipo.equals("")) {
             throw new Exception("Informe a descrição do tipo");
         }
-        
+
         List<TipoMiniaturas> lista = dal.getAllTipoMiniaturas();
         for (int pos = 0; pos < lista.size(); pos++) {
             TipoMiniaturas aux = lista.get(pos);
@@ -61,7 +63,7 @@ public class TipoMiniaturaBll {
             }
         }
     }
-    
+
     public void ordenaListaDeTipoDeMiniaturas(List<TipoMiniaturas> lista) throws Exception {
         for (int i = 0; i < lista.size(); i++) {
             for (int j = i; j < lista.size(); j++) {
@@ -73,4 +75,9 @@ public class TipoMiniaturaBll {
             }
         }
     }
+
+    public ArrayList pesquisarTipoDeMiniatura(String dados) throws Exception {
+        return this.dal.pesquisarTipoDeMiniatura(dados);
+    }
+
 }

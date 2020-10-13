@@ -116,5 +116,20 @@ public class TemaDal {
         }
         return tema;
     }
-
+    
+     public ArrayList pesquisarTemas(String dados) throws Exception {
+        String textoDigitado = dados;
+        ArrayList<Temas> resultadoDaPesquisa = new ArrayList<>();
+        boolean vdd = true;
+        for (Temas tema : getAllTemas()) {
+            if (tema.getNome().toLowerCase().trim().contains(textoDigitado)) {
+                resultadoDaPesquisa.add(tema);
+                vdd = false;
+            }
+        }
+        if (vdd) {
+            throw new Exception("Registro não encontrado!\n");
+        }
+        return resultadoDaPesquisa;
+    }
 }

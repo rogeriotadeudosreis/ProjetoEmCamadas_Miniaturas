@@ -95,7 +95,7 @@
                                   <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jButtonNovaMiniatura" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonManutencaoDeMiniatura" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -138,7 +138,7 @@
                               <Component id="jComboBoxMiniaturas" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Component id="jButtonNovaMiniatura" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonManutencaoDeMiniatura" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="58" max="32767" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -237,6 +237,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableFotosMiniaturaMouseReleased"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -367,12 +370,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonNovaMiniatura">
+        <Component class="javax.swing.JButton" name="jButtonManutencaoDeMiniatura">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Manuten&#xe7;l&#xe3;o de Miniatura"/>
+            <Property name="text" type="java.lang.String" value="Manuten&#xe7;&#xe3;o de Miniatura"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNovaMiniaturaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonManutencaoDeMiniaturaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

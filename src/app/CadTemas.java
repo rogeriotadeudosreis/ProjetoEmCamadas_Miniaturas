@@ -53,38 +53,21 @@ public class CadTemas extends javax.swing.JDialog {
     public CadTemas(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
-        criarTblTemas();
-        consultaTemas();
     }
 
-    private void criarTblTemas() {
-
-        modelo.addColumn("Código");
-        modelo.addColumn("Nome");
-
-        jTableTemas.setModel(modelo);
-
-        jTableTemas.getColumnModel().getColumn(0).setMinWidth(50);
-        jTableTemas.getColumnModel().getColumn(0).setMaxWidth(50);
-        jTableTemas.getColumnModel().getColumn(0).setPreferredWidth(100);
-    }
-
-    private void consultaTemas() throws Exception {
-        modelo.setRowCount(0);
-
-        List<Temas> listaTemas = new ArrayList<Temas>();
-        listaTemas = temaBll.getConsulta();
-
-        // Chamda do método para ordenar a lista de temas 
-        temaBll.ordenaListaDeTemas(listaTemas);
-
-        for (int i = 0; i < listaTemas.size(); i++) {
-            modelo.addRow(new Object[]{listaTemas.get(i).getId(),
-                listaTemas.get(i).getNome().toUpperCase()});
-        }
-        int registros = listaTemas.size();
-        jTextFieldQuantRegistros.setText(String.format("%02d", registros));
-    }
+   private void imprimirDadosTemas(List<Temas> listaTemas)throws Exception{
+       DefaultTableModel model = (DefaultTableModel) jTableCadTemas.getModel();
+       model.setNumRows(0);
+       temaBll.ordenaListaDeTemas(listaTemas);
+       for (int pos = 0; pos < listaTemas.size(); pos++) {
+           String [] linha = new String [2];
+           Temas aux = listaTemas.get(pos);
+           linha[0] = aux.getId() + "";
+           linha[1] = aux.getNome().toUpperCase();
+           model.addRow(linha);
+       }
+       jTextFieldQuantRegistros.setText(listaTemas.size() + "");
+   }
 
     private void limpaCampos() {
         jTextFieldCodTema.setText("");
@@ -109,11 +92,12 @@ public class CadTemas extends javax.swing.JDialog {
         jTextFieldNomeTema = new javax.swing.JTextField();
         jButtonExcluir = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTemas = new javax.swing.JTable(modelo);
         jButtonConsultar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldQuantRegistros = new javax.swing.JTextField();
+        jButtonListar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableCadTemas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Temas de Miniaturas");
@@ -145,14 +129,6 @@ public class CadTemas extends javax.swing.JDialog {
             }
         });
 
-        jTableTemas.setModel(modelo);
-        jTableTemas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableTemasMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableTemas);
-
         jButtonConsultar.setText("CONSULTAR");
         jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,36 +140,71 @@ public class CadTemas extends javax.swing.JDialog {
 
         jTextFieldQuantRegistros.setEditable(false);
 
+        jButtonListar.setText("LISTAR");
+        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarActionPerformed(evt);
+            }
+        });
+
+        jTableCadTemas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Descrição"
+            }
+        ));
+        jTableCadTemas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableCadTemasMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableCadTemas);
+        if (jTableCadTemas.getColumnModel().getColumnCount() > 0) {
+            jTableCadTemas.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableCadTemas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableCadTemas.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldCodTema, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNomeTema, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonConsultar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSalvar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane2))
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                    .addGap(44, 44, 44)
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextFieldCodTema, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextFieldNomeTema, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                    .addGap(177, 177, 177)
+                                    .addComponent(jButtonNovo)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonListar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonConsultar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonExcluir)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonSalvar)))
+                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanelCadFabricantesLayout.setVerticalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,11 +221,14 @@ public class CadTemas extends javax.swing.JDialog {
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonNovo)
                     .addComponent(jButtonConsultar)
+                    .addComponent(jButtonListar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -253,8 +267,7 @@ public class CadTemas extends javax.swing.JDialog {
                 } else {
                     temaBll.alterar(tema);
                 }
-                consultaTemas();
-
+                imprimirDadosTemas(temaBll.getConsulta());
                 limpaCampos();
 
             } catch (Exception erro) {
@@ -267,7 +280,7 @@ public class CadTemas extends javax.swing.JDialog {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             temaBll.remover(temaBll.getConsultaPorId(tema.getId()));
-            consultaTemas();
+            imprimirDadosTemas(temaBll.getConsulta());
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
@@ -280,19 +293,33 @@ public class CadTemas extends javax.swing.JDialog {
         jButtonSalvar.setLabel("SALVAR");
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
-    private void jTableTemasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTemasMouseClicked
-        int linha = jTableTemas.getSelectedRow();
-        Integer codigo = (Integer) jTableTemas.getValueAt(linha, 0);
-        preencherCampos((int) codigo);
-    }//GEN-LAST:event_jTableTemasMouseClicked
-
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
         try {
-            consultaTemas();
+            imprimirDadosTemas(temaBll.pesquisarTemas(jTextFieldNomeTema.getText()));
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonConsultarActionPerformed
+
+    private void jTableCadTemasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCadTemasMouseReleased
+        // TODO add your handling code here:
+        try {
+            int linha = jTableCadTemas.getSelectedRow();
+            Integer codigo = Integer.parseInt(jTableCadTemas.getValueAt(linha, 0).toString());
+            preencherCampos((int)codigo);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jTableCadTemasMouseReleased
+
+    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
+        // TODO add your handling code here:
+        try {
+            imprimirDadosTemas(temaBll.getConsulta());
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void preencherCampos(int id) {
         try {
@@ -360,14 +387,15 @@ public class CadTemas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelCadFabricantes;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableTemas;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableCadTemas;
     private javax.swing.JTextField jTextFieldCodTema;
     private javax.swing.JTextField jTextFieldNomeTema;
     private javax.swing.JTextField jTextFieldQuantRegistros;

@@ -14,7 +14,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Fabricantes;
 
@@ -54,30 +53,35 @@ public class CadFabricantes extends javax.swing.JDialog {
     public CadFabricantes(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
-        criarTblFabricantes();
-        consultaFabricantes();
+
+        //consultaFabricantes();
+    }
+
+    private void imprimirDadosFabricantes(List<Fabricantes> listaFabricantes) throws Exception {
+        DefaultTableModel model = (DefaultTableModel) jTableCadFabricantes.getModel();
+        model.setNumRows(0);
+        fabricanteBll.ordenaListaFabricantes(listaFabricantes);
+        for (int pos = 0; pos < listaFabricantes.size(); pos++) {
+            String[] linha = new String[2];
+            Fabricantes aux = listaFabricantes.get(pos);
+            linha[0] = "" + aux.getId();
+            linha[1] = aux.getNome().toUpperCase();
+            model.addRow(linha);
+
+        }
+        jTextFieldQuantRegistros.setText(listaFabricantes.size() + "");
 
     }
 
-    private void criarTblFabricantes() {
-        modelo.addColumn("Código");
-        modelo.addColumn("Nome");
-        jTableFabricantes.setModel(modelo);
-
-        jTableFabricantes.getColumnModel().getColumn(0).setMinWidth(60);
-        jTableFabricantes.getColumnModel().getColumn(0).setMaxWidth(60);
-        jTableFabricantes.getColumnModel().getColumn(1).setPreferredWidth(200);
-    }
-
-    private void consultaFabricantes() throws Exception {
+    private void imprimirFabricante() throws Exception {
         modelo.setRowCount(0);
 
         List<Fabricantes> listaFabricantes = new ArrayList<>();
         listaFabricantes = fabricanteBll.getConsulta();
-        
+
         //Chamado do método para ordenar a lista de fabricantes
         fabricanteBll.ordenaListaFabricantes(listaFabricantes);
-        
+
         for (int i = 0; i < listaFabricantes.size(); i++) {
             modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
                 listaFabricantes.get(i).getNome().toUpperCase()});
@@ -85,7 +89,7 @@ public class CadFabricantes extends javax.swing.JDialog {
         int registro = listaFabricantes.size();
         jTextFieldQuantRegistros.setText(String.format("%02d", registro));
     }
-    
+
     private void limpaCampos() {
         jTextFieldCodFabricante.setText("");
         jTextFieldNomeFabricante.setText("");
@@ -108,11 +112,12 @@ public class CadFabricantes extends javax.swing.JDialog {
         jTextFieldNomeFabricante = new javax.swing.JTextField();
         jButtonExcluir = new javax.swing.JButton();
         jButtonNovo = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFabricantes = new javax.swing.JTable(modelo);
         jButtonConsultar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldQuantRegistros = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableCadFabricantes = new javax.swing.JTable();
+        jButtonListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Fabricantes");
@@ -144,14 +149,6 @@ public class CadFabricantes extends javax.swing.JDialog {
             }
         });
 
-        jTableFabricantes.setModel(modelo);
-        jTableFabricantes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableFabricantesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableFabricantes);
-
         jButtonConsultar.setText("CONSULTAR");
         jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,38 +160,69 @@ public class CadFabricantes extends javax.swing.JDialog {
 
         jTextFieldQuantRegistros.setEditable(false);
 
+        jTableCadFabricantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome"
+            }
+        ));
+        jTableCadFabricantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableCadFabricantesMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableCadFabricantes);
+        if (jTableCadFabricantes.getColumnModel().getColumnCount() > 0) {
+            jTableCadFabricantes.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableCadFabricantes.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableCadFabricantes.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jButtonListar.setText("LISTAR");
+        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCadFabricantesLayout = new javax.swing.GroupLayout(jPanelCadFabricantes);
         jPanelCadFabricantes.setLayout(jPanelCadFabricantesLayout);
         jPanelCadFabricantesLayout.setHorizontalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                 .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                                .addComponent(jButtonNovo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonConsultar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonExcluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonSalvar))
-                            .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldCodFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(245, 245, 245)
+                        .addComponent(jButtonNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonListar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonSalvar))
                     .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldCodFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldNomeFabricante))
+                    .addGroup(jPanelCadFabricantesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2)))
+                .addContainerGap())
         );
         jPanelCadFabricantesLayout.setVerticalGroup(
             jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,14 +238,15 @@ public class CadFabricantes extends javax.swing.JDialog {
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonNovo)
-                    .addComponent(jButtonConsultar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(jButtonConsultar)
+                    .addComponent(jButtonListar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelCadFabricantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,7 +285,7 @@ public class CadFabricantes extends javax.swing.JDialog {
                 } else {
                     fabricanteBll.alterar(fabricante);
                 }
-                consultaFabricantes();
+                imprimirDadosFabricantes(fabricanteBll.getConsulta());
                 limpaCampos();
 
             } catch (Exception erro) {
@@ -269,18 +298,12 @@ public class CadFabricantes extends javax.swing.JDialog {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
             fabricanteBll.remover(fabricanteBll.getConsultaPorId(fabricante.getId()));
-            consultaFabricantes();
+            imprimirFabricante();
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage(), "\nAtenção!!!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
-
-    private void jTableFabricantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFabricantesMouseClicked
-        int linha = jTableFabricantes.getSelectedRow();
-        Integer codigo = (Integer) jTableFabricantes.getValueAt(linha, 0);
-        preencherCampos((int) codigo);
-    }//GEN-LAST:event_jTableFabricantesMouseClicked
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
         limpaCampos();
@@ -290,11 +313,32 @@ public class CadFabricantes extends javax.swing.JDialog {
 
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
         try {
-            consultaFabricantes();
+            imprimirDadosFabricantes(fabricanteBll.pesquisarFbricante(jTextFieldNomeFabricante.getText()));
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção!!!\n", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonConsultarActionPerformed
+
+    private void jTableCadFabricantesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCadFabricantesMouseReleased
+        // TODO add your handling code here:
+        try {
+            int linha = jTableCadFabricantes.getSelectedRow();
+            Integer codigo = Integer.parseInt(jTableCadFabricantes.getValueAt(linha, 0).toString());
+            preencherCampos((int) codigo);
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jTableCadFabricantesMouseReleased
+
+    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
+        // TODO add your handling code here:
+        try {
+            imprimirDadosFabricantes(fabricanteBll.getConsulta());
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção!!!\n" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void preencherCampos(int id) {
 
@@ -310,7 +354,7 @@ public class CadFabricantes extends javax.swing.JDialog {
                 jButtonSalvar.setLabel("SALVAR");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção mouse click!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção mouse click!!!\n", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
@@ -365,14 +409,15 @@ public class CadFabricantes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelCadFabricantes;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableFabricantes;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableCadFabricantes;
     private javax.swing.JTextField jTextFieldCodFabricante;
     private javax.swing.JTextField jTextFieldNomeFabricante;
     private javax.swing.JTextField jTextFieldQuantRegistros;

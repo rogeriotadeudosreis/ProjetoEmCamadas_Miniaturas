@@ -67,8 +67,8 @@ public class Tipo_MiniaturaDal {
                     + erro.getMessage());
         }
     }
-    
-     public void updateTipoMiniaturas(TipoMiniaturas tipo) throws Exception {
+
+    public void updateTipoMiniaturas(TipoMiniaturas tipo) throws Exception {
         String sql = "UPDATE tipo_miniaturas SET tipo_tipMin=? WHERE id_tipmin=?";
         try {
             PreparedStatement preparedStatement
@@ -80,11 +80,11 @@ public class Tipo_MiniaturaDal {
 
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao alterar este registro\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
     }
-     
-      public List<TipoMiniaturas> getAllTipoMiniaturas() throws Exception {
+
+    public List<TipoMiniaturas> getAllTipoMiniaturas() throws Exception {
         List<TipoMiniaturas> list = new ArrayList<TipoMiniaturas>();
         String sql = "SELECT * FROM tipo_miniaturas";
         try {
@@ -98,12 +98,12 @@ public class Tipo_MiniaturaDal {
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao consultar os registros de tipo de miniaturas\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
         return list;
     }
-      
-       public TipoMiniaturas getTipoMinById(int id) throws Exception {
+
+    public TipoMiniaturas getTipoMinById(int id) throws Exception {
         TipoMiniaturas tipo = new TipoMiniaturas();
         String sql = "SELECT * FROM tipo_miniaturas WHERE id_tipMin=?";
         try {
@@ -117,8 +117,24 @@ public class Tipo_MiniaturaDal {
             }
         } catch (Exception erro) {
             throw new Exception("Ocorreu um erro ao buscar este registro de tipo de miniaturas\n"
-            + erro.getMessage());
+                    + erro.getMessage());
         }
         return tipo;
+    }
+
+    public ArrayList pesquisarTipoDeMiniatura(String dados) throws Exception {
+        String textoDigitado = dados;
+        ArrayList<TipoMiniaturas> resultadoDaPesquisa = new ArrayList<>();
+        boolean vdd = true;
+        for (TipoMiniaturas tipo : getAllTipoMiniaturas()) {
+            if (tipo.getTipo().toLowerCase().trim().contains(textoDigitado)) {
+                resultadoDaPesquisa.add(tipo);
+                vdd = false;
+            }
+        }
+        if (vdd) {
+            throw new Exception("Registro não encontrado!\n");
+        }
+        return resultadoDaPesquisa;
     }
 }
