@@ -52,6 +52,9 @@ public class FabricanteBll {
         if (nome.equals("")) {
             throw new Exception("Informe o nome do fabricante");
         }
+        if (nome.length() < 3) {
+            throw new Exception("A descrição do fabricante deve ter no mínimo 3 letras!\n");
+        }
 
         List<Fabricantes> lista = dal.getAllFabricantes();
         for (int pos = 0; pos < lista.size(); pos++) {

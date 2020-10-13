@@ -197,6 +197,8 @@ public class CadMiniaturas extends javax.swing.JDialog {
         jButtonManutencaoTipoMiniatura = new javax.swing.JButton();
         jButtonManutencaoTemas = new javax.swing.JButton();
         jTextFieldPesquisarMiniatura = new javax.swing.JTextField();
+        jButtonCadFotos = new javax.swing.JButton();
+        jButtonFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Miniaturas");
@@ -319,6 +321,20 @@ public class CadMiniaturas extends javax.swing.JDialog {
         jTextFieldPesquisarMiniatura.setForeground(new java.awt.Color(102, 102, 102));
         jTextFieldPesquisarMiniatura.setText("< Digite aqui um dado da miniatura >");
 
+        jButtonCadFotos.setText("CADASTRO DE FOTOS");
+        jButtonCadFotos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadFotosActionPerformed(evt);
+            }
+        });
+
+        jButtonFechar.setText("FECHAR");
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelMiniaturasLayout = new javax.swing.GroupLayout(jPanelMiniaturas);
         jPanelMiniaturas.setLayout(jPanelMiniaturasLayout);
         jPanelMiniaturasLayout.setHorizontalGroup(
@@ -331,7 +347,8 @@ public class CadMiniaturas extends javax.swing.JDialog {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonFechar))
                     .addGroup(jPanelMiniaturasLayout.createSequentialGroup()
                         .addGroup(jPanelMiniaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextFieldPesquisarMiniatura)
@@ -375,22 +392,26 @@ public class CadMiniaturas extends javax.swing.JDialog {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jTextFieldEscala, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(60, 60, 60))
-                                        .addComponent(jButtonConsultar)))
+                                        .addGroup(jPanelMiniaturasLayout.createSequentialGroup()
+                                            .addComponent(jButtonConsultar)
+                                            .addGap(92, 92, 92)
+                                            .addComponent(jButtonCadFotos))))
                                 .addGroup(jPanelMiniaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelMiniaturasLayout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldValor))
-                                    .addGroup(jPanelMiniaturasLayout.createSequentialGroup()
-                                        .addGap(0, 46, Short.MAX_VALUE)
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBoxTemas, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonManutencaoTemas))))
+                                        .addComponent(jButtonManutencaoTemas))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
+                                        .addGap(0, 46, Short.MAX_VALUE)
+                                        .addGroup(jPanelMiniaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
+                                                .addComponent(jLabel10)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jComboBoxTemas, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMiniaturasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonNovo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Excluir)
@@ -438,14 +459,16 @@ public class CadMiniaturas extends javax.swing.JDialog {
                     .addComponent(jButtonConsultar)
                     .addComponent(Excluir)
                     .addComponent(jButtonSalvar)
-                    .addComponent(jTextFieldPesquisarMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPesquisarMiniatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCadFotos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(22, 22, 22)
                 .addGroup(jPanelMiniaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonFechar))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -638,6 +661,21 @@ public class CadMiniaturas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonManutencaoTemasActionPerformed
 
+    private void jButtonCadFotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadFotosActionPerformed
+        // TODO add your handling code here:
+        try {
+            new CadFotos(null, true).setVisible(true);
+           
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção!!!" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jButtonCadFotosActionPerformed
+
+    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonFecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -687,7 +725,9 @@ public class CadMiniaturas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Excluir;
+    private javax.swing.JButton jButtonCadFotos;
     private javax.swing.JButton jButtonConsultar;
+    private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonManutencaoFabricante;
     private javax.swing.JButton jButtonManutencaoTemas;
     private javax.swing.JButton jButtonManutencaoTipoMiniatura;

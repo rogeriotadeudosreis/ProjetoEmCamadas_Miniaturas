@@ -38,6 +38,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItemCadTipoDeMiniaturas = new javax.swing.JMenuItem();
         jMenuItemCadMiniaturas = new javax.swing.JMenuItem();
         jMenuItemFotos = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItemRelatorioDeFotos = new javax.swing.JMenuItem();
         jMenuBarraSair = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
@@ -55,9 +57,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        jMenuBarraCadastros.setText("MANUTENÇÃO DE CADASTROS");
+        jMenuBarraCadastros.setText("Manutenção de Cadastros");
 
-        jMenuItemCadFabricantes.setText("FABRICANTE");
+        jMenuItemCadFabricantes.setText("Fabricante");
         jMenuItemCadFabricantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCadFabricantesActionPerformed(evt);
@@ -65,7 +67,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuBarraCadastros.add(jMenuItemCadFabricantes);
 
-        jMenuItemCadTemas.setText("TEMA");
+        jMenuItemCadTemas.setText("Tema");
         jMenuItemCadTemas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCadTemasActionPerformed(evt);
@@ -73,7 +75,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuBarraCadastros.add(jMenuItemCadTemas);
 
-        jMenuItemCadTipoDeMiniaturas.setText("TIPO DE MINIATURA");
+        jMenuItemCadTipoDeMiniaturas.setText("Tipo de Miniatura");
         jMenuItemCadTipoDeMiniaturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCadTipoDeMiniaturasActionPerformed(evt);
@@ -81,7 +83,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuBarraCadastros.add(jMenuItemCadTipoDeMiniaturas);
 
-        jMenuItemCadMiniaturas.setText("MINIATURAS");
+        jMenuItemCadMiniaturas.setText("Miniaturas");
         jMenuItemCadMiniaturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCadMiniaturasActionPerformed(evt);
@@ -89,7 +91,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuBarraCadastros.add(jMenuItemCadMiniaturas);
 
-        jMenuItemFotos.setText("FOTOS");
+        jMenuItemFotos.setText("Fotos");
         jMenuItemFotos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemFotosActionPerformed(evt);
@@ -99,9 +101,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuBarraCadastros);
 
-        jMenuBarraSair.setText("SAIR");
+        jMenu1.setText("Relatórios");
 
-        jMenuItem5.setText("SAIR");
+        jMenuItemRelatorioDeFotos.setText("Fotos");
+        jMenuItemRelatorioDeFotos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRelatorioDeFotosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemRelatorioDeFotos);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenuBarraSair.setText("sair");
+
+        jMenuItem5.setText("Sair");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -185,6 +199,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemFotosActionPerformed
 
+    private void jMenuItemRelatorioDeFotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatorioDeFotosActionPerformed
+        // TODO add your handling code here:
+        try {
+            new ListaDeMiniaturasView(null, true).setVisible(true);
+            this.setVisible(true);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItemRelatorioDeFotosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -222,6 +246,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuBarraCadastros;
     private javax.swing.JMenu jMenuBarraSair;
@@ -231,5 +256,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCadTemas;
     private javax.swing.JMenuItem jMenuItemCadTipoDeMiniaturas;
     private javax.swing.JMenuItem jMenuItemFotos;
+    private javax.swing.JMenuItem jMenuItemRelatorioDeFotos;
     // End of variables declaration//GEN-END:variables
 }

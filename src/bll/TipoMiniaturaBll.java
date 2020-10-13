@@ -54,6 +54,10 @@ public class TipoMiniaturaBll {
         if (tipo.equals("")) {
             throw new Exception("Informe a descrição do tipo");
         }
+        
+        if (tipo.length() < 3) {
+            throw new Exception("A descrição do tipo deve ter no mínimo 3 letras!\n");
+        }
 
         List<TipoMiniaturas> lista = dal.getAllTipoMiniaturas();
         for (int pos = 0; pos < lista.size(); pos++) {

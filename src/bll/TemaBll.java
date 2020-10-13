@@ -55,6 +55,10 @@ public class TemaBll {
             throw new Exception("Informe a descrição do tema");
         }
         
+        if (nome.length() < 3) {
+            throw new Exception("A descrição do tema deve ter no mínimo 3 letras!\n");
+        }
+        
         List<Temas> lista = dal.getAllTemas();
         for (int pos = 0; pos < lista.size(); pos++) {
             Temas aux = lista.get(pos);

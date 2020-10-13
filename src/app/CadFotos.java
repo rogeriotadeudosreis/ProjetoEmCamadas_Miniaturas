@@ -170,6 +170,8 @@ public class CadFotos extends javax.swing.JDialog {
         jTextFieldQuantRegistros = new javax.swing.JTextField();
         jButtonCancelar = new javax.swing.JButton();
         jButtonManutencaoDeMiniatura = new javax.swing.JButton();
+        jButtonListaMiniaturaDetalhada = new javax.swing.JButton();
+        jButtonFECHAR = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Fotos de Miniaturas");
@@ -290,12 +292,26 @@ public class CadFotos extends javax.swing.JDialog {
             }
         });
 
+        jButtonListaMiniaturaDetalhada.setText("LISTAR");
+        jButtonListaMiniaturaDetalhada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListaMiniaturaDetalhadaActionPerformed(evt);
+            }
+        });
+
+        jButtonFECHAR.setText("FECHAR");
+        jButtonFECHAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFECHARActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCadFotosLayout = new javax.swing.GroupLayout(jPanelCadFotos);
         jPanelCadFotos.setLayout(jPanelCadFotosLayout);
         jPanelCadFotosLayout.setHorizontalGroup(
             jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadFotosLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadFotosLayout.createSequentialGroup()
                         .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -305,21 +321,25 @@ public class CadFotos extends javax.swing.JDialog {
                                 .addComponent(jTextFieldCaminhoDaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanelCadFotosLayout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonCancelar)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButtonNovo)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonListaMiniaturaDetalhada)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonCancelar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButtonConsulta)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButtonExcluir)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButtonSalvar))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonSalvar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonFECHAR))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 775, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanelCadFotosLayout.createSequentialGroup()
                                     .addComponent(jLabel4)
@@ -366,7 +386,7 @@ public class CadFotos extends javax.swing.JDialog {
                             .addComponent(jComboBoxMiniaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addComponent(jButtonManutencaoDeMiniatura)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -379,28 +399,33 @@ public class CadFotos extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonSalvar)
+                            .addComponent(jButtonNovo)
                             .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonSalvar)
                                 .addComponent(jButtonExcluir)
                                 .addComponent(jButtonConsulta)
-                                .addComponent(jButtonNovo)
                                 .addComponent(jButtonCancelar)
+                                .addComponent(jButtonListaMiniaturaDetalhada)
+                                .addComponent(jButtonFECHAR))
+                            .addGroup(jPanelCadFotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextFieldQuantRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel5))))
                     .addComponent(jLabel2))
-                .addGap(33, 33, 33))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelCadFotos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelCadFotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelCadFotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -515,7 +540,6 @@ public class CadFotos extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         limpaCampos();
-        // this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonManutencaoDeMiniaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonManutencaoDeMiniaturaActionPerformed
@@ -553,6 +577,21 @@ public class CadFotos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Atenção !!!\n" + erro.getMessage());
         }
     }//GEN-LAST:event_jTableFotosMiniaturaMouseReleased
+
+    private void jButtonListaMiniaturaDetalhadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListaMiniaturaDetalhadaActionPerformed
+        // TODO add your handling code here:
+        try {
+            new ListaDeMiniaturasView(null, true).setVisible(true);
+            
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Atenção!!!" + erro.getMessage());
+        }
+    }//GEN-LAST:event_jButtonListaMiniaturaDetalhadaActionPerformed
+
+    private void jButtonFECHARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFECHARActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonFECHARActionPerformed
 
     /**
      * @param args the command line arguments
@@ -600,6 +639,8 @@ public class CadFotos extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonConsulta;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonFECHAR;
+    private javax.swing.JButton jButtonListaMiniaturaDetalhada;
     private javax.swing.JButton jButtonManutencaoDeMiniatura;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
