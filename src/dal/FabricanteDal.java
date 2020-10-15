@@ -34,7 +34,6 @@ public class FabricanteDal {
             instance = new FabricanteDal();
         }
         return instance;
-
     }
 
     public void addFabricante(Fabricantes fabricante) throws Exception {
@@ -47,9 +46,9 @@ public class FabricanteDal {
             preparedStatement.executeUpdate();
 
         } catch (SQLException erro) {
-            throw new Exception("Ocorreu um erro ao adicionar este registro\n"
-                    + erro.getMessage());
+            throw erro;
         }
+
     }
 
     public void deleteFabricante(int id) throws Exception {
@@ -63,8 +62,8 @@ public class FabricanteDal {
             preparedStatement.executeUpdate();
 
         } catch (SQLException erro) {
-            throw new Exception("Ocorreu um erro ao deletar este registro!\n"
-                    + erro.getMessage());
+
+           throw erro;
         }
     }
 

@@ -32,7 +32,16 @@ public class TipoMiniaturaBll {
     }
 
     public void removerTipoDeMiniaturas(TipoMiniaturas tipo) throws Exception {
-        dal.deleteTipoMiniaturas(tipo.getId());
+        try {
+            dal.deleteTipoMiniaturas(tipo.getId());
+        } catch (Exception erro) {
+            String mensagem = erro.getMessage();
+            if (mensagem.toLowerCase().contains("violates foreign")) {
+                throw new Exception("O tipo de miniatura que deseja deletar "
+                        + "está relacionado com um registro de miniatura!\n"
+                        + "Verifique\n");
+            }
+        }
     }
 
     public List<TipoMiniaturas> getConsulta() throws Exception {
@@ -54,7 +63,7 @@ public class TipoMiniaturaBll {
         if (tipo.equals("")) {
             throw new Exception("Informe a descrição do tipo");
         }
-        
+
         if (tipo.length() < 3) {
             throw new Exception("A descrição do tipo deve ter no mínimo 3 letras!\n");
         }

@@ -36,6 +36,8 @@ public class Miniaturas {
     private Fabricantes fabricante;
     private TipoMiniaturas tipoMin;
     private Temas tema;
+    
+    
     private List<Fotos> fotos;
 
     public Miniaturas() {

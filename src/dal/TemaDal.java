@@ -57,8 +57,7 @@ public class TemaDal {
             preparedStatement.executeUpdate();
 
         } catch (SQLException erro) {
-            throw new Exception("Ocorreu um erro ao deletar este registro!\n"
-                    + erro.getMessage());
+            throw erro;
         }
     }
 

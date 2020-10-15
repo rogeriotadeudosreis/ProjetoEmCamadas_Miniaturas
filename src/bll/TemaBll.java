@@ -32,18 +32,26 @@ public class TemaBll {
     }
 
     public void remover(Temas tema) throws Exception {
-        dal.deleteTemas(tema.getId());
+        try {
+            dal.deleteTemas(tema.getId());
+        } catch (Exception erro) {
+            String mensagem = erro.getMessage();
+            if (mensagem.toLowerCase().contains("violates foreign")) {
+                throw new Exception("O tema que deseja deletar está relacionado "
+                        + "com um registro de miniatura!\nVerifique\n");
+            }
+        }
     }
 
     public List<Temas> getConsulta() throws Exception {
         return dal.getAllTemas();
     }
-    
-    public Temas getConsultaPorId (int id)throws Exception{
+
+    public Temas getConsultaPorId(int id) throws Exception {
         return dal.getTemasById(id);
     }
-    
-    public void validaTema(Temas objeto)throws Exception{
+
+    public void validaTema(Temas objeto) throws Exception {
         String nome = objeto.getNome().trim().toLowerCase();
         String invalidos = "1234567890'\"!@#$%¨&*()+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
@@ -54,11 +62,11 @@ public class TemaBll {
         if (nome.equals("")) {
             throw new Exception("Informe a descrição do tema");
         }
-        
+
         if (nome.length() < 3) {
             throw new Exception("A descrição do tema deve ter no mínimo 3 letras!\n");
         }
-        
+
         List<Temas> lista = dal.getAllTemas();
         for (int pos = 0; pos < lista.size(); pos++) {
             Temas aux = lista.get(pos);
@@ -66,8 +74,8 @@ public class TemaBll {
                 throw new Exception("A descrição informada já existe!\n");
             }
         }
-   }
-    
+    }
+
     public void ordenaListaDeTemas(List<Temas> lista) throws Exception {
         for (int i = 0; i < lista.size(); i++) {
             for (int j = i; j < lista.size(); j++) {
@@ -80,9 +88,9 @@ public class TemaBll {
         }
         // retorna o array ordenado por nome
     }
-    
-     public ArrayList pesquisarTemas(String dados) throws Exception{
-         return this.dal.pesquisarTemas(dados);
-     }
+
+    public ArrayList pesquisarTemas(String dados) throws Exception {
+        return this.dal.pesquisarTemas(dados);
+    }
 
 }

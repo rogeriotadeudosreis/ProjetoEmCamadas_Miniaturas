@@ -27,10 +27,19 @@ public class FabricanteBll {
     public void alterar(Fabricantes objeto) throws Exception {
         validaFabricante(objeto);
         dal.updateFabricante(objeto);
+
     }
 
     public void remover(Fabricantes objeto) throws Exception {
-        dal.deleteFabricante(objeto.getId());
+        try {
+            dal.deleteFabricante(objeto.getId());
+        } catch (Exception erro) {
+            String mensagem = erro.getMessage();
+            if (mensagem.toLowerCase().contains("violates foreign")) {
+                throw new Exception("O fabricante informado não pode ser deletado "
+                        + "porque existem registros relacionados com ele!\nVerifique\n");
+            }
+        }
     }
 
     public List<Fabricantes> getConsulta() throws Exception {
@@ -60,7 +69,8 @@ public class FabricanteBll {
         for (int pos = 0; pos < lista.size(); pos++) {
             Fabricantes aux = lista.get(pos);
             if (nome.equalsIgnoreCase(aux.getNome())) {
-                throw new Exception("O nome informado já existe!\n");
+                throw new Exception("O nome informado já existe "
+                        + " nos registros de fabricantes!\n");
             }
         }
     }
