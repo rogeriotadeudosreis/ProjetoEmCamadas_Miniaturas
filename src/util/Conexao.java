@@ -14,14 +14,13 @@ public class Conexao {
     private static Connection conexao = null;
 
     private Conexao() {
-
     }
 
     public static Connection getConexao() {
         if (conexao == null) {
             try {
                 String driver = "org.postgresql.Driver";
-                String url = "jdbc:postgresql://192.168.0.12:5432/projeto_camadas";
+                String url = "jdbc:postgresql://192.168.0.5:5432/projeto_camadas";
                 String usuario = "postgres";
                 String password = "1357";
 

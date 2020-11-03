@@ -25,7 +25,6 @@ public class FabricanteBll {
     }
 
     public void alterar(Fabricantes objeto) throws Exception {
-        validaFabricante(objeto);
         dal.updateFabricante(objeto);
 
     }
@@ -37,7 +36,7 @@ public class FabricanteBll {
             String mensagem = erro.getMessage();
             if (mensagem.toLowerCase().contains("violates foreign")) {
                 throw new Exception("O fabricante informado não pode ser deletado "
-                        + "porque existem registros relacionados com ele!\nVerifique\n");
+                        + "porque existem registros relacionados a ele!\nVerifique\n");
             }
         }
     }

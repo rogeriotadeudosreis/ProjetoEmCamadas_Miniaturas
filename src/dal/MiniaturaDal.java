@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model.Fabricantes;
 import model.Miniaturas;
 import util.Conexao;
 
@@ -61,10 +60,7 @@ public class MiniaturaDal {
     public void deleteMiniatura(int id) throws Exception {
         String sql = "DELETE FROM miniaturas WHERE id_min=?";
         try {
-
-            PreparedStatement preparedStatement
-                    = conexao.prepareStatement(sql);
-
+            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 

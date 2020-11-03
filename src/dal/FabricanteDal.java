@@ -48,7 +48,6 @@ public class FabricanteDal {
         } catch (SQLException erro) {
             throw erro;
         }
-
     }
 
     public void deleteFabricante(int id) throws Exception {

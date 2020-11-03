@@ -7,7 +7,6 @@ package app;
 
 import bll.FabricanteBll;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +54,6 @@ public class CadFabricantes extends javax.swing.JDialog {
         initComponents();
         jButtonExcluir.setEnabled(false);
 
-        //consultaFabricantes();
     }
 
     private void imprimirDadosFabricantes(List<Fabricantes> listaFabricantes) throws Exception {
@@ -74,22 +72,6 @@ public class CadFabricantes extends javax.swing.JDialog {
 
     }
 
-//    private void imprimirFabricante() throws Exception {
-//        modelo.setRowCount(0);
-//
-//        List<Fabricantes> listaFabricantes = new ArrayList<>();
-//        listaFabricantes = fabricanteBll.getConsulta();
-//
-//        //Chamado do método para ordenar a lista de fabricantes
-//        fabricanteBll.ordenaListaFabricantes(listaFabricantes);
-//
-//        for (int i = 0; i < listaFabricantes.size(); i++) {
-//            modelo.addRow(new Object[]{listaFabricantes.get(i).getId(),
-//                listaFabricantes.get(i).getNome().toUpperCase()});
-//        }
-//        int registro = listaFabricantes.size();
-//        jTextFieldQuantRegistros.setText(String.format("%02d", registro));
-//    }
 
     private void limpaCampos() {
         jTextFieldCodFabricante.setText("");
