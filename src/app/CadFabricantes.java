@@ -25,6 +25,8 @@ public class CadFabricantes extends javax.swing.JDialog {
     private DefaultTableModel modelo = new DefaultTableModel();
     private FabricanteBll fabricanteBll = new FabricanteBll();
     private Fabricantes fabricante = new Fabricantes();
+    
+    //esta linha é apenas um teste para o push no git 
 
     private static Date createNewDate(String data) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
